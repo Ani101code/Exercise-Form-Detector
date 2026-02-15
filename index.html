@@ -6,7 +6,7 @@
     <title>Exercise-Form-Detector | AI Exercise Form Analysis</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; background: #fafafa; }
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
         
         .header { 
@@ -15,8 +15,17 @@
             padding: 60px 20px; 
             text-align: center;
             margin-bottom: 40px;
+            border-bottom: 4px solid #0366d6;
         }
         .header h1 { font-size: 2.5em; margin-bottom: 20px; }
+        .header .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            color: #bbb;
+            font-size: 0.9em;
+        }
         
         .repo-info {
             background: #f6f8fa;
@@ -24,6 +33,7 @@
             border-radius: 8px;
             margin: 30px 0;
             text-align: center;
+            border: 1px solid #e1e4e8;
         }
         
         .btn {
@@ -34,7 +44,9 @@
             text-decoration: none;
             border-radius: 6px;
             margin: 10px;
+            border: 1px solid #1b1f23;
         }
+        .btn:hover { background: #2b3137; }
         
         .features {
             display: grid;
@@ -44,10 +56,97 @@
         }
         
         .feature {
-            padding: 20px;
+            padding: 25px;
             background: white;
             border: 1px solid #e1e4e8;
             border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .feature h3 { color: #0366d6; margin-bottom: 10px; }
+        
+        /* References Section - UPDATED with your full list */
+        .references {
+            background: white;
+            border: 1px solid #e1e4e8;
+            border-radius: 8px;
+            padding: 40px;
+            margin: 50px 0;
+        }
+        .references h2 { 
+            color: #24292e; 
+            border-bottom: 2px solid #0366d6;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        .references h3 {
+            color: #0366d6;
+            margin: 30px 0 15px;
+            font-size: 1.3em;
+        }
+        .references h4 {
+            color: #586069;
+            margin: 20px 0 10px;
+            font-size: 1.1em;
+            font-style: italic;
+        }
+        .ref-list {
+            list-style-type: none;
+            margin-bottom: 30px;
+        }
+        .ref-list li {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            border-left: 3px solid #e1e4e8;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        .ref-list li strong {
+            color: #24292e;
+        }
+        .ref-list li a {
+            color: #0366d6;
+            text-decoration: none;
+            font-size: 0.9em;
+            word-break: break-all;
+        }
+        .ref-list li a:hover {
+            text-decoration: underline;
+        }
+        .ref-category {
+            background: #f6f8fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        
+        .video-placeholder {
+            background: #1b1f23;
+            color: #fff;
+            padding: 60px;
+            text-align: center;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .stats-grid {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .stat {
+            padding: 20px 30px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e1e4e8;
+            min-width: 150px;
+        }
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #0366d6;
         }
         
         footer {
@@ -56,6 +155,13 @@
             background: #24292e;
             color: white;
             margin-top: 40px;
+            border-top: 4px solid #0366d6;
+        }
+        footer a { color: #bbb; text-decoration: none; }
+        footer a:hover { color: white; }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2em; }
         }
     </style>
 </head>
@@ -64,19 +170,28 @@
         <div class="container">
             <h1>🏋️ Exercise-Form-Detector</h1>
             <p style="font-size: 1.2em;">AI-powered exercise form analysis and rep counting</p>
-            <p style="margin-top: 20px;">
-                <a href="https://github.com/Ani101code/Exercise-Form-Detector" class="btn" style="background: #fff; color: #24292e;">View on GitHub</a>
+            <div class="stats">
+                <span>⭐ 0 stars</span>
+                <span>⑂ 0 forks</span>
+                <span>🐍 Python 100%</span>
+                <span>📅 Feb 2026</span>
+            </div>
+            <p style="margin-top: 30px;">
+                <a href="https://github.com/Ani101code/Exercise-Form-Detector" class="btn" style="background: #fff; color: #24292e;">📁 View on GitHub</a>
+                <a href="#references" class="btn" style="background: #0366d6;">📚 Jump to References</a>
             </p>
         </div>
     </div>
 
     <div class="container">
         <!-- Project Description -->
-        <div style="background: white; padding: 30px; border-radius: 8px; border: 1px solid #e1e4e8;">
+        <div style="background: white; padding: 30px; border-radius: 8px; border: 1px solid #e1e4e8; margin-bottom: 30px;">
             <h2>🎯 Project Aim</h2>
-            <p style="margin-top: 15px; font-size: 1.1em;">
+            <p style="margin-top: 15px; font-size: 1.1em; line-height: 1.8;">
                 The aim of this project is to develop an AI-powered exercise form analysis system that uses computer vision 
                 to analyze human movement in real time, provide feedback on exercise technique, and count exercise repetitions automatically.
+                The system detects body posture from live video input and evaluates joint positions and movement patterns to identify 
+                incorrect form, asymmetries, and unsafe movements.
             </p>
         </div>
 
@@ -85,11 +200,13 @@
             <h3>📁 Repository Contents</h3>
             <p style="margin: 15px 0;">
                 <strong>exercise_pose.py</strong> - Main program<br>
-                <strong>Reference</strong> - Scientific references<br>
-                <strong>Project Report</strong> - Full documentation
+                <strong>Reference</strong> - Scientific references (27 sources)<br>
+                <strong>Project Report</strong> - Full documentation<br>
+                <strong>7 commits</strong> | <strong>100% Python</strong>
             </p>
             <a href="https://github.com/Ani101code/Exercise-Form-Detector/blob/main/exercise_pose.py" class="btn">View Code</a>
-            <a href="https://github.com/Ani101code/Exercise-Form-Detector/blob/main/Reference" class="btn">View References</a>
+            <a href="https://github.com/Ani101code/Exercise-Form-Detector/blob/main/Reference" class="btn">View References File</a>
+            <a href="https://github.com/Ani101code/Exercise-Form-Detector/blob/main/Project%20Report" class="btn">View Report</a>
         </div>
 
         <!-- Features -->
@@ -97,79 +214,268 @@
         <div class="features">
             <div class="feature">
                 <h3>🎥 Real-time Analysis</h3>
-                <p>Live video input with instant form feedback</p>
+                <p>Live video input with instant form feedback using MediaPipe pose estimation</p>
             </div>
             <div class="feature">
                 <h3>📊 Angle Calculation</h3>
-                <p>Precise joint angle measurement (elbow, hip, knee)</p>
+                <p>Precise joint angle measurement (elbow, hip, knee, back) with median smoothing</p>
             </div>
             <div class="feature">
                 <h3>🔄 Rep Counting</h3>
-                <p>Automatic repetition tracking with form validation</p>
+                <p>Automatic repetition tracking with form validation and 2-second cooldown</p>
             </div>
             <div class="feature">
                 <h3>⚠️ Form Correction</h3>
-                <p>Identifies incorrect form and unsafe movements</p>
+                <p>Identifies incorrect form (sagging hips, kipping, knee valgus) and unsafe movements</p>
             </div>
             <div class="feature">
                 <h3>🔊 Audio Feedback</h3>
-                <p>Verbal cues for form correction</p>
+                <p>Verbal cues for form correction using TTS (pyttsx3/win32com)</p>
             </div>
             <div class="feature">
                 <h3>📈 Session Tracking</h3>
-                <p>Track reps across multiple exercises</p>
+                <p>Track reps across push-ups, pull-ups, and squats with reset options</p>
             </div>
         </div>
 
         <!-- Demo Videos Placeholder -->
-        <div style="background: #f6f8fa; padding: 40px; border-radius: 8px; text-align: center; margin: 40px 0;">
-            <h2>📹 Demo Videos (Coming Soon)</h2>
-            <p style="margin: 20px 0;">Check back for video demonstrations of:</p>
+        <div class="video-placeholder">
+            <h2 style="color: white; margin-bottom: 20px;">📹 Demo Videos (Coming Soon)</h2>
+            <p style="margin-bottom: 20px;">Video demonstrations of push-up, pull-up, and squat analysis will be added here.</p>
             <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                <div style="background: #fff; padding: 15px; border-radius: 8px;">Push-up Analysis</div>
-                <div style="background: #fff; padding: 15px; border-radius: 8px;">Pull-up Analysis</div>
-                <div style="background: #fff; padding: 15px; border-radius: 8px;">Squat Analysis</div>
+                <div style="background: #2b3137; padding: 15px 25px; border-radius: 6px;">Push-up Analysis</div>
+                <div style="background: #2b3137; padding: 15px 25px; border-radius: 6px;">Pull-up Analysis</div>
+                <div style="background: #2b3137; padding: 15px 25px; border-radius: 6px;">Squat Analysis</div>
             </div>
         </div>
 
-        <!-- References -->
-        <div style="background: white; padding: 30px; border-radius: 8px; border: 1px solid #e1e4e8; margin: 40px 0;">
-            <h2>📚 References</h2>
-            <ul style="margin-top: 20px; columns: 2;">
-                <li>Cogley, R.M., et al. (2005) - Push-up biomechanics</li>
-                <li>Youdas, J.W., et al. (2010) - Pull-up EMG analysis</li>
-                <li>Schoenfeld, B.J. (2010) - Squat kinematics</li>
-                <li>Hewett, T.E., et al. (2005) - Knee valgus and ACL</li>
-                <li>McGill, S. (2016) - Low Back Disorders</li>
-                <li>MediaPipe (2023) - Pose Detection Guide</li>
+        <!-- ===== UPDATED REFERENCES SECTION WITH YOUR FULL LIST ===== -->
+        <div class="references" id="references">
+            <h2>📚 References and Related Work</h2>
+            <p style="margin-bottom: 30px; color: #586069;">
+                This bibliography is split into two groups: 
+                <strong>1) Technical references</strong> (pose estimation, CV pipelines, implementation stack), and 
+                <strong>2) Anatomical / biomechanics references</strong> (exercise technique, joint angles, muscle activation, EMG) 
+                for push-ups, pull-ups/chin-ups, and squats.
+            </p>
+
+            <!-- Group A: Technical References -->
+            <h3>A) Technical references (computer vision / pose estimation / implementation)</h3>
+            
+            <ul class="ref-list">
+                <li>
+                    <strong>1.</strong> Lugaresi, C., Tang, J., Nash, H., et al. (2019). 
+                    <em>MediaPipe: A Framework for Building Perception Pipelines.</em> arXiv:1906.08172.<br>
+                    <a href="https://arxiv.org/abs/1906.08172" target="_blank">https://arxiv.org/abs/1906.08172</a>
+                </li>
+                <li>
+                    <strong>2.</strong> Bazarevsky, V., Grishchenko, I., Raveendran, K., et al. (2020). 
+                    <em>BlazePose: On-device Real-time Body Pose Tracking.</em> Google AI technical release.<br>
+                    <a href="https://ai.googleblog.com/2020/08/on-device-real-time-body-pose-tracking.html" target="_blank">https://ai.googleblog.com/2020/08/on-device-real-time-body-pose-tracking.html</a>
+                </li>
+                <li>
+                    <strong>3.</strong> Cao, Z., Hidalgo, G., Simon, T., Wei, S.-E., & Sheikh, Y. (2021). 
+                    <em>OpenPose: Realtime Multi-Person 2D Pose Estimation using Part Affinity Fields.</em> IEEE TPAMI, 43(1), 172-186.<br>
+                    <a href="https://doi.org/10.1109/TPAMI.2019.2929257" target="_blank">https://doi.org/10.1109/TPAMI.2019.2929257</a>
+                </li>
+                <li>
+                    <strong>4.</strong> Toshev, A., & Szegedy, C. (2014). 
+                    <em>DeepPose: Human Pose Estimation via Deep Neural Networks.</em> CVPR.<br>
+                    <a href="https://doi.org/10.1109/CVPR.2014.214" target="_blank">https://doi.org/10.1109/CVPR.2014.214</a>
+                </li>
+                <li>
+                    <strong>5.</strong> Newell, A., Yang, K., & Deng, J. (2016). 
+                    <em>Stacked Hourglass Networks for Human Pose Estimation.</em> ECCV.<br>
+                    <a href="https://doi.org/10.1007/978-3-319-46484-8_29" target="_blank">https://doi.org/10.1007/978-3-319-46484-8_29</a>
+                </li>
+                <li>
+                    <strong>6.</strong> OpenCV documentation.<br>
+                    <a href="https://docs.opencv.org/" target="_blank">https://docs.opencv.org/</a>
+                </li>
+                <li>
+                    <strong>7.</strong> MediaPipe Pose / Pose Landmarker documentation.<br>
+                    <a href="https://developers.google.com/mediapipe/solutions/vision/pose_landmarker" target="_blank">https://developers.google.com/mediapipe/solutions/vision/pose_landmarker</a>
+                </li>
+                <li>
+                    <strong>8.</strong> NumPy documentation.<br>
+                    <a href="https://numpy.org/doc/" target="_blank">https://numpy.org/doc/</a>
+                </li>
+                <li>
+                    <strong>9.</strong> Python threading and queue documentation.<br>
+                    <a href="https://docs.python.org/3/library/threading.html" target="_blank">threading</a> • 
+                    <a href="https://docs.python.org/3/library/queue.html" target="_blank">queue</a>
+                </li>
+                <li>
+                    <strong>10.</strong> pyttsx3 documentation.<br>
+                    <a href="https://pyttsx3.readthedocs.io/" target="_blank">https://pyttsx3.readthedocs.io/</a>
+                </li>
+                <li>
+                    <strong>11.</strong> Microsoft documentation (SAPI/COM context for win32com).<br>
+                    <a href="https://learn.microsoft.com/" target="_blank">https://learn.microsoft.com/</a> • 
+                    <a href="https://learn.microsoft.com/en-us/previous-versions/windows/desktop/ms723602(v=vs.85)" target="_blank">SAPI Reference</a>
+                </li>
             </ul>
-            <p style="margin-top: 20px;">
-                <a href="https://github.com/Ani101code/Exercise-Form-Detector/blob/main/Reference">View full reference list →</a>
+
+            <!-- Group B: Anatomical References -->
+            <h3 style="margin-top: 40px;">B) Anatomical, biomechanics, and EMG references (exercise form logic)</h3>
+            
+            <h4>B1) Foundational biomechanics / kinesiology books</h4>
+            <ul class="ref-list">
+                <li>
+                    <strong>12.</strong> Neumann, D. A. (2017). 
+                    <em>Kinesiology of the Musculoskeletal System: Foundations for Rehabilitation</em> (3rd ed.). Elsevier.<br>
+                    <a href="https://www.elsevier.com/books/kinesiology-of-the-musculoskeletal-system/neumann/978-0-323-28320-1" target="_blank">Publisher Link</a>
+                </li>
+                <li>
+                    <strong>13.</strong> NSCA (Haff, G. G., & Triplett, N. T., eds.). (2016). 
+                    <em>Essentials of Strength Training and Conditioning</em> (4th ed.). Human Kinetics.<br>
+                    <a href="https://us.humankinetics.com/products/essentials-of-strength-training-and-conditioning-4th-edition-with-web-resource" target="_blank">Publisher Link</a>
+                </li>
+                <li>
+                    <strong>14.</strong> American College of Sports Medicine. (2021). 
+                    <em>ACSM's Guidelines for Exercise Testing and Prescription</em> (11th ed.). Wolters Kluwer.<br>
+                    <a href="https://shop.lww.com/ACSM-s-Guidelines-for-Exercise-Testing-and-Prescription/p/9781975150181" target="_blank">Publisher Link</a>
+                </li>
+                <li>
+                    <strong>15.</strong> Kendall, F. P., McCreary, E. K., Provance, P. G., Rodgers, M. M., & Romani, W. A. (2005). 
+                    <em>Muscles: Testing and Function with Posture and Pain</em> (5th ed.). Lippincott Williams & Wilkins.<br>
+                    <a href="https://shop.lww.com/Kendall-s-Muscles--Testing-and-Function-with-Posture-and-Pain/p/9780781747806" target="_blank">Publisher Link</a>
+                </li>
+            </ul>
+
+            <h4>B2) Squat technique, joint loading, and muscle activation</h4>
+            <ul class="ref-list">
+                <li>
+                    <strong>16.</strong> Escamilla, R. F. (2001). 
+                    <em>Knee biomechanics of the dynamic squat exercise.</em> Medicine & Science in Sports & Exercise, 33(1), 127-141.<br>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/11224815/" target="_blank">PubMed</a>
+                </li>
+                <li>
+                    <strong>17.</strong> Schoenfeld, B. J. (2010). 
+                    <em>Squatting kinematics and kinetics and their application to exercise performance.</em> Journal of Strength and Conditioning Research, 24(12), 3497-3506.<br>
+                    <a href="https://doi.org/10.1519/JSC.0b013e3181bac2d7" target="_blank">https://doi.org/10.1519/JSC.0b013e3181bac2d7</a>
+                </li>
+                <li>
+                    <strong>18.</strong> Caterisano, A., Moss, R. F., Pellinger, T. K., et al. (2002). 
+                    <em>The effect of back squat depth on the EMG activity of 4 superficial hip and thigh muscles.</em> Journal of Strength and Conditioning Research, 16(3), 428-432.<br>
+                    <a href="https://journals.lww.com/nsca-jscr/Abstract/2002/08000/The_Effect_of_Back_Squat_Depth_on_the_EMG_Activity.14.aspx" target="_blank">Journal Link</a>
+                </li>
+                <li>
+                    <strong>19.</strong> Bryanton, M. A., Kennedy, M. D., Carey, J. P., & Chiu, L. Z. F. (2012). 
+                    <em>Effect of squat depth and barbell load on relative muscular effort in squatting.</em> Journal of Strength and Conditioning Research, 26(10), 2820-2828.<br>
+                    <a href="https://doi.org/10.1519/JSC.0b013e31826791a7" target="_blank">https://doi.org/10.1519/JSC.0b013e31826791a7</a>
+                </li>
+            </ul>
+
+            <h4>B3) Push-up biomechanics and EMG</h4>
+            <ul class="ref-list">
+                <li>
+                    <strong>20.</strong> Cogley, R. M., Archambault, T. A., Fibeger, J. F., et al. (2005). 
+                    <em>Comparison of muscle activation using various hand positions during the push-up exercise.</em> Journal of Strength and Conditioning Research, 19(3), 628-633.<br>
+                    <a href="https://journals.lww.com/nsca-jscr/Abstract/2005/08000/Comparison_of_Muscle_Activation_using_Various_Hand.25.aspx" target="_blank">Journal Link</a>
+                </li>
+                <li>
+                    <strong>21.</strong> Youdas, J. W., Amundson, C. L., Cicero, K. S., et al. (2010). 
+                    <em>Surface electromyographic activation patterns and elbow joint motion during a push-up, knee push-up, and bench press.</em> Journal of Strength and Conditioning Research, 24(1), 16-22.<br>
+                    <a href="https://journals.lww.com/nsca-jscr/Abstract/2010/01000/Surface_Electromyographic_Activation_Patterns_and.3.aspx" target="_blank">Journal Link</a>
+                </li>
+                <li>
+                    <strong>22.</strong> Snarr, R. L., & Esco, M. R. (2013). 
+                    <em>Electromyographical comparison of the traditional and suspension push-up.</em> Journal of Human Kinetics, 39, 75-83.<br>
+                    <a href="https://doi.org/10.2478/hukin-2013-0077" target="_blank">https://doi.org/10.2478/hukin-2013-0077</a>
+                </li>
+            </ul>
+
+            <h4>B4) Pull-up / chin-up biomechanics and EMG</h4>
+            <ul class="ref-list">
+                <li>
+                    <strong>23.</strong> Youdas, J. W., Amundson, C. L., Cicero, K. S., et al. (2010). 
+                    <em>Surface electromyographic activation patterns and elbow joint motion during a pull-up, chin-up, or perfect-pullup rotational exercise.</em> Journal of Strength and Conditioning Research, 24(12), 3404-3414.<br>
+                    <a href="https://doi.org/10.1519/JSC.0b013e3181bdec05" target="_blank">https://doi.org/10.1519/JSC.0b013e3181bdec05</a>
+                </li>
+                <li>
+                    <strong>24.</strong> Dickie, J. A., Faulkner, J. A., Barnes, M. J., & Lark, S. D. (2017). 
+                    <em>Electromyographic analysis of muscle activation in pull-up variations.</em> Journal of Electromyography and Kinesiology, 32, 30-36.<br>
+                    <a href="https://doi.org/10.1016/j.jelekin.2016.12.004" target="_blank">https://doi.org/10.1016/j.jelekin.2016.12.004</a>
+                </li>
+            </ul>
+
+            <h4>B5) Practical anatomy / exercise reference websites (for implementation notes)</h4>
+            <ul class="ref-list">
+                <li>
+                    <strong>25.</strong> ExRx Exercise Library (exercise mechanics and prime movers).<br>
+                    <a href="https://exrx.net/" target="_blank">https://exrx.net/</a>
+                </li>
+                <li>
+                    <strong>26.</strong> ACE (American Council on Exercise) exercise technique resources.<br>
+                    <a href="https://www.acefitness.org/" target="_blank">https://www.acefitness.org/</a>
+                </li>
+                <li>
+                    <strong>27.</strong> NCBI Bookshelf anatomy and kinesiology resources.<br>
+                    <a href="https://www.ncbi.nlm.nih.gov/books/" target="_blank">https://www.ncbi.nlm.nih.gov/books/</a>
+                </li>
+            </ul>
+
+            <!-- Notes for use -->
+            <div style="background: #f1f8ff; padding: 20px; border-radius: 6px; margin-top: 30px; border-left: 4px solid #0366d6;">
+                <h4 style="color: #0366d6; margin-bottom: 10px;">📝 Notes for use in this project</h4>
+                <ul style="margin-left: 20px;">
+                    <li>Technical thresholds (e.g., elbow/knee/hip angle cutoffs) should be treated as heuristic ranges informed by literature and coaching guidelines, then calibrated empirically for camera setup and user population.</li>
+                    <li>EMG findings are exercise-variation dependent (grip width, cadence, tempo, load, depth, fatigue), so references are best used to justify rule directionality (what tends to increase/decrease activation), not as absolute universal cutoffs.</li>
+                </ul>
+            </div>
+
+            <p style="margin-top: 20px; text-align: right;">
+                <a href="https://github.com/Ani101code/Exercise-Form-Detector/blob/main/Reference" target="_blank">
+                    📄 View raw references file on GitHub →
+                </a>
             </p>
         </div>
 
         <!-- Stats -->
-        <div style="display: flex; justify-content: space-around; text-align: center; margin: 40px 0;">
-            <div>
-                <h3 style="font-size: 2em; color: #0366d6;">7</h3>
+        <div class="stats-grid">
+            <div class="stat">
+                <div class="stat-number">27</div>
+                <p>References</p>
+            </div>
+            <div class="stat">
+                <div class="stat-number">7</div>
                 <p>Commits</p>
             </div>
-            <div>
-                <h3 style="font-size: 2em; color: #0366d6;">100%</h3>
+            <div class="stat">
+                <div class="stat-number">100%</div>
                 <p>Python</p>
             </div>
-            <div>
-                <h3 style="font-size: 2em; color: #0366d6;">Feb 2026</h3>
-                <p>Last Updated</p>
+            <div class="stat">
+                <div class="stat-number">Feb '26</div>
+                <p>Last Update</p>
             </div>
+        </div>
+
+        <!-- QR Code for Jury -->
+        <div style="background: white; padding: 40px; border-radius: 8px; border: 1px solid #e1e4e8; text-align: center; margin: 50px 0;">
+            <h2 style="margin-bottom: 20px;">📱 Quick Access for Jury</h2>
+            <p style="margin-bottom: 20px;">Scan to view this page with complete references on your phone</p>
+            <div style="background: #f6f8fa; padding: 20px; display: inline-block; border-radius: 8px;">
+                <!-- Generate QR code at https://www.qr-code-generator.com/ with your GitHub Pages URL -->
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://ani101code.github.io/Exercise-Form-Detector/" 
+                     alt="QR Code" style="width: 150px; height: 150px;">
+            </div>
+            <p style="margin-top: 20px; color: #586069;">
+                Or visit: <strong>ani101code.github.io/Exercise-Form-Detector</strong>
+            </p>
         </div>
     </div>
 
     <footer>
         <p><strong>Exercise-Form-Detector</strong> by Ani101code</p>
         <p style="margin-top: 10px;">
-            <a href="https://github.com/Ani101code/Exercise-Form-Detector" style="color: #fff;">GitHub</a> • 
-            <a href="https://github.com/Ani101code/Exercise-Form-Detector/blob/main/LICENSE" style="color: #fff;">MIT License</a>
+            <a href="https://github.com/Ani101code/Exercise-Form-Detector">GitHub</a> • 
+            <a href="#references">References (27 sources)</a> • 
+            <a href="https://github.com/Ani101code/Exercise-Form-Detector/blob/main/LICENSE">MIT License</a>
+        </p>
+        <p style="margin-top: 20px; font-size: 0.9em; color: #bbb;">
+            Based on peer-reviewed research in exercise biomechanics and computer vision
         </p>
     </footer>
 </body>
