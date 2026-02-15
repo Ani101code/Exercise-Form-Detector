@@ -104,3 +104,7 @@ By rejecting repetitions with unsafe form and providing immediate corrective fee
 10. Conclusion
 This project demonstrates that a computer vision–based system using pose estimation and multimodal feedback can effectively detect incorrect exercise form and improve movement quality in real time. The integration of audio feedback reduces reliance on visual attention and enhances usability during exercise.
 Although direct injury prevention cannot be conclusively proven, the system successfully minimizes biomechanical risk factors, suggesting a meaningful contribution to safer and more effective training.
+
+ 
+11. References
+A curated reference list for prior scientific work and implementation resources is provided in references.
