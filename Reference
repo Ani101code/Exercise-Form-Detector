@@ -1,0 +1,109 @@
+References and Related Work
+
+This bibliography is split into two groups:
+1) Technical references (pose estimation, CV pipelines, implementation stack), and
+2) Anatomical / biomechanics references (exercise technique, joint angles, muscle activation, EMG) for push-ups, pull-ups/chin-ups, and squats.
+
+A) Technical references (computer vision / pose estimation / implementation)
+
+1. Lugaresi, C., Tang, J., Nash, H., et al. (2019). MediaPipe: A Framework for Building Perception Pipelines. arXiv:1906.08172.
+   Link: https://arxiv.org/abs/1906.08172
+
+2. Bazarevsky, V., Grishchenko, I., Raveendran, K., et al. (2020). BlazePose: On-device Real-time Body Pose Tracking (Google AI technical release ecosystem).
+   Link: https://ai.googleblog.com/2020/08/on-device-real-time-body-pose-tracking.html
+
+3. Cao, Z., Hidalgo, G., Simon, T., Wei, S.-E., & Sheikh, Y. (2021). OpenPose: Realtime Multi-Person 2D Pose Estimation using Part Affinity Fields. IEEE TPAMI, 43(1), 172-186.
+   Link: https://doi.org/10.1109/TPAMI.2019.2929257
+
+4. Toshev, A., & Szegedy, C. (2014). DeepPose: Human Pose Estimation via Deep Neural Networks. CVPR.
+   Link: https://doi.org/10.1109/CVPR.2014.214
+
+5. Newell, A., Yang, K., & Deng, J. (2016). Stacked Hourglass Networks for Human Pose Estimation. ECCV.
+   Link: https://doi.org/10.1007/978-3-319-46484-8_29
+
+6. OpenCV documentation.
+   Link: https://docs.opencv.org/
+
+7. MediaPipe Pose / Pose Landmarker documentation.
+   Link: https://developers.google.com/mediapipe/solutions/vision/pose_landmarker
+
+8. NumPy documentation.
+   Link: https://numpy.org/doc/
+
+9. Python threading and queue documentation.
+   Links:
+   - https://docs.python.org/3/library/threading.html
+   - https://docs.python.org/3/library/queue.html
+
+10. pyttsx3 documentation.
+    Link: https://pyttsx3.readthedocs.io/
+
+11. Microsoft documentation (SAPI/COM context for win32com).
+    Links:
+    - https://learn.microsoft.com/
+    - https://learn.microsoft.com/en-us/previous-versions/windows/desktop/ms723602(v=vs.85)
+
+B) Anatomical, biomechanics, and EMG references (exercise form logic)
+
+B1) Foundational biomechanics / kinesiology books
+
+12. Neumann, D. A. (2017). Kinesiology of the Musculoskeletal System: Foundations for Rehabilitation (3rd ed.). Elsevier.
+    Link: https://www.elsevier.com/books/kinesiology-of-the-musculoskeletal-system/neumann/978-0-323-28320-1
+
+13. NSCA (Haff, G. G., & Triplett, N. T., eds.). (2016). Essentials of Strength Training and Conditioning (4th ed.). Human Kinetics.
+    Link: https://us.humankinetics.com/products/essentials-of-strength-training-and-conditioning-4th-edition-with-web-resource
+
+14. American College of Sports Medicine. (2021). ACSM's Guidelines for Exercise Testing and Prescription (11th ed.). Wolters Kluwer.
+    Link: https://shop.lww.com/ACSM-s-Guidelines-for-Exercise-Testing-and-Prescription/p/9781975150181
+
+15. Kendall, F. P., McCreary, E. K., Provance, P. G., Rodgers, M. M., & Romani, W. A. (2005). Muscles: Testing and Function with Posture and Pain (5th ed.). Lippincott Williams & Wilkins.
+    Link: https://shop.lww.com/Kendall-s-Muscles--Testing-and-Function-with-Posture-and-Pain/p/9780781747806
+
+B2) Squat technique, joint loading, and muscle activation
+
+16. Escamilla, R. F. (2001). Knee biomechanics of the dynamic squat exercise. Medicine & Science in Sports & Exercise, 33(1), 127-141.
+    Link: https://pubmed.ncbi.nlm.nih.gov/11224815/
+
+17. Schoenfeld, B. J. (2010). Squatting kinematics and kinetics and their application to exercise performance. Journal of Strength and Conditioning Research, 24(12), 3497-3506.
+    Link: https://doi.org/10.1519/JSC.0b013e3181bac2d7
+
+18. Caterisano, A., Moss, R. F., Pellinger, T. K., et al. (2002). The effect of back squat depth on the EMG activity of 4 superficial hip and thigh muscles. Journal of Strength and Conditioning Research, 16(3), 428-432.
+    Link: https://journals.lww.com/nsca-jscr/Abstract/2002/08000/The_Effect_of_Back_Squat_Depth_on_the_EMG_Activity.14.aspx
+
+19. Bryanton, M. A., Kennedy, M. D., Carey, J. P., & Chiu, L. Z. F. (2012). Effect of squat depth and barbell load on relative muscular effort in squatting. Journal of Strength and Conditioning Research, 26(10), 2820-2828.
+    Link: https://doi.org/10.1519/JSC.0b013e31826791a7
+
+B3) Push-up biomechanics and EMG
+
+20. Cogley, R. M., Archambault, T. A., Fibeger, J. F., et al. (2005). Comparison of muscle activation using various hand positions during the push-up exercise. Journal of Strength and Conditioning Research, 19(3), 628-633.
+    Link: https://journals.lww.com/nsca-jscr/Abstract/2005/08000/Comparison_of_Muscle_Activation_using_Various_Hand.25.aspx
+
+21. Youdas, J. W., Amundson, C. L., Cicero, K. S., et al. (2010). Surface electromyographic activation patterns and elbow joint motion during a push-up, knee push-up, and bench press. Journal of Strength and Conditioning Research, 24(1), 16-22.
+    Link: https://journals.lww.com/nsca-jscr/Abstract/2010/01000/Surface_Electromyographic_Activation_Patterns_and.3.aspx
+
+22. Snarr, R. L., & Esco, M. R. (2013). Electromyographical comparison of the traditional and suspension push-up. Journal of Human Kinetics, 39, 75-83.
+    Link: https://doi.org/10.2478/hukin-2013-0077
+
+B4) Pull-up / chin-up biomechanics and EMG
+
+23. Youdas, J. W., Amundson, C. L., Cicero, K. S., et al. (2010). Surface electromyographic activation patterns and elbow joint motion during a pull-up, chin-up, or perfect-pullup rotational exercise. Journal of Strength and Conditioning Research, 24(12), 3404-3414.
+    Link: https://doi.org/10.1519/JSC.0b013e3181bdec05
+
+24. Dickie, J. A., Faulkner, J. A., Barnes, M. J., & Lark, S. D. (2017). Electromyographic analysis of muscle activation in pull-up variations. Journal of Electromyography and Kinesiology, 32, 30-36.
+    Link: https://doi.org/10.1016/j.jelekin.2016.12.004
+
+B5) Practical anatomy / exercise reference websites (for implementation notes)
+
+25. ExRx Exercise Library (exercise mechanics and prime movers).
+    Link: https://exrx.net/
+
+26. ACE (American Council on Exercise) exercise technique resources.
+    Link: https://www.acefitness.org/
+
+27. NCBI Bookshelf anatomy and kinesiology resources.
+    Link: https://www.ncbi.nlm.nih.gov/books/
+
+Notes for use in this project
+
+- Technical thresholds (e.g., elbow/knee/hip angle cutoffs) should be treated as heuristic ranges informed by literature and coaching guidelines, then calibrated empirically for camera setup and user population.
+- EMG findings are exercise-variation dependent (grip width, cadence, tempo, load, depth, fatigue), so references are best used to justify rule directionality (what tends to increase/decrease activation), not as absolute universal cutoffs.
