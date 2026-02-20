@@ -176,24 +176,38 @@
         
         .video-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
             margin: 30px 0;
         }
         
         .video-card {
             background: #f6f8fa;
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
             border: 1px solid #e1e4e8;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
         }
         
         .video-card h3 {
-            padding: 15px;
+            padding: 18px;
             background: #24292e;
             color: white;
             margin: 0;
-            font-size: 1.2em;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .video-card h3 .emoji {
+            font-size: 1.4em;
         }
         
         .video-container {
@@ -210,6 +224,16 @@
             left: 0;
             width: 100%;
             height: 100%;
+            border: none;
+        }
+        
+        .video-card p {
+            padding: 15px;
+            background: #f6f8fa;
+            margin: 0;
+            color: #586069;
+            font-size: 0.95em;
+            border-top: 1px solid #e1e4e8;
         }
         
         /* Requirements Section */
@@ -427,6 +451,18 @@
             margin-top: 20px;
         }
         
+        /* Highlight for new video */
+        .new-video-badge {
+            background: #2cbe4e;
+            color: white;
+            font-size: 0.7em;
+            padding: 3px 8px;
+            border-radius: 20px;
+            margin-left: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        
         /* Responsive Design */
         @media (max-width: 768px) {
             .header h1 {
@@ -446,6 +482,10 @@
             .footer-links {
                 flex-direction: column;
                 gap: 15px;
+            }
+            
+            .video-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -520,7 +560,7 @@
             </div>
         </section>
 
-        <!-- Demo Videos Section (YouTube Unlisted - Private) -->
+        <!-- Demo Videos Section -->
         <section>
             <h2 style="font-size: 2.2em; margin: 40px 0 20px;">📹 Demo Videos</h2>
             <p style="color: #586069; margin-bottom: 20px;">
@@ -528,9 +568,13 @@
             </p>
             
             <div class="video-grid">
-                <!-- Push-up Video (YOUR VIDEO) -->
+                <!-- Push-up Video -->
                 <div class="video-card">
-                    <h3>🔵 Push-up Analysis</h3>
+                    <h3>
+                        <span class="emoji">🔵</span> 
+                        Push-up Analysis
+                        <span class="new-video-badge">Updated</span>
+                    </h3>
                     <div class="video-container">
                         <iframe width="815" height="458" src="https://www.youtube.com/embed/Sq3WyI0eTN4" 
                                 title="Exercise Form Corrector: PUSH-UP MODE" 
@@ -540,47 +584,60 @@
                                 allowfullscreen>
                         </iframe>
                     </div>
-                    <p style="padding: 15px; background: #f6f8fa; margin: 0; color: #586069;">
-                        Elbow angle tracking • Hip position • Rep counting • Form correction demo
+                    <p>
+                        <strong>Features:</strong> Elbow angle tracking • Hip position • Rep counting • Form correction demo
                     </p>
                 </div>
                 
-                <!-- Pull-up Video (Placeholder) -->
+                <!-- Pull-up Video -->
                 <div class="video-card">
-                    <h3>🔴 Pull-up Analysis</h3>
+                    <h3>
+                        <span class="emoji">🔴</span> 
+                        Pull-up Analysis
+                    </h3>
                     <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" 
+                        <iframe width="815" height="458" src="https://www.youtube.com/embed/VIDEO_ID_2" 
                                 title="Pull-up Analysis Demo"
                                 frameborder="0" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                 allowfullscreen>
                         </iframe>
                     </div>
-                    <p style="padding: 15px; background: #f6f8fa; margin: 0; color: #586069;">
-                        Kipping detection • Asymmetry check • Full ROM requirement
+                    <p>
+                        <strong>Features:</strong> Kipping detection • Asymmetry check • Full ROM requirement • Chin over bar
                     </p>
                 </div>
                 
-                <!-- Squat Video (Placeholder) -->
+                <!-- Squat Video - NEW VIDEO ADDED -->
                 <div class="video-card">
-                    <h3>🟢 Squat Analysis</h3>
+                    <h3>
+                        <span class="emoji">🟢</span> 
+                        Squat Analysis
+                        <span class="new-video-badge">NEW</span>
+                    </h3>
                     <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" 
-                                title="Squat Analysis Demo"
+                        <iframe width="815" height="458" src="https://www.youtube.com/embed/qqR_Lphhp3w" 
+                                title="Squat Analysis Demo - Exercise Form Detector" 
                                 frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                referrerpolicy="strict-origin-when-cross-origin" 
                                 allowfullscreen>
                         </iframe>
                     </div>
-                    <p style="padding: 15px; background: #f6f8fa; margin: 0; color: #586069;">
-                        Depth check • Knee tracking • Back angle monitoring
+                    <p>
+                        <strong>Features:</strong> Depth check (110° knee angle) • Knee tracking (valgus detection) • Back angle monitoring • Form correction feedback
                     </p>
                 </div>
             </div>
             
-            <p style="text-align: center; margin-top: 20px; color: #6f42c1;">
-                ⚠️ Videos are private/unlisted - only accessible via these embedded links
-            </p>
+            <div style="background: #f1f8ff; padding: 15px; border-radius: 8px; margin-top: 20px; text-align: center; border-left: 4px solid #0366d6;">
+                <p style="color: #0366d6; font-weight: 500;">
+                    📌 Squat Demo Video Added: <a href="https://youtu.be/qqR_Lphhp3w" target="_blank" style="color: #0366d6;">https://youtu.be/qqR_Lphhp3w</a>
+                </p>
+                <p style="color: #586069; font-size: 0.95em; margin-top: 5px;">
+                    Shows real-time knee angle tracking, depth validation, and form correction for proper squat technique
+                </p>
+            </div>
         </section>
 
         <!-- Form Requirements -->
@@ -621,8 +678,8 @@
                         <li>Up position: Knee &gt; 150 deg (standing)</li>
                         <li>Down position: Knee &lt; 110 deg (parallel+)</li>
                         <li>Chest up: Back angle 60-120 deg</li>
-                        <li>Knees track over toes</li>
-                        <li>No knee valgus (caving in)</li>
+                        <li>Knees track over toes (no valgus)</li>
+                        <li>Knees NOT too wide (max 1.2x hip width)</li>
                         <li>Face camera directly</li>
                     </ul>
                 </div>
@@ -666,7 +723,7 @@
             </div>
         </section>
 
-        <!-- References Section (Your Complete List) -->
+        <!-- References Section -->
         <section class="references" id="references">
             <h2>📚 References and Related Work</h2>
             <p style="margin-bottom: 30px; color: #586069;">
@@ -825,6 +882,7 @@
                 <ul style="margin-left: 20px; color: #24292e;">
                     <li>Technical thresholds are heuristic ranges informed by literature and coaching guidelines.</li>
                     <li>EMG findings are exercise-variation dependent - references justify rule directionality.</li>
+                    <li>Squat knee valgus detection based on Escamilla (2001) and Schoenfeld (2010).</li>
                 </ul>
             </div>
         </section>
@@ -856,7 +914,7 @@
             </div>
         </section>
 
-        <!-- QR CODE SECTION (What you specifically asked for) -->
+        <!-- QR CODE SECTION -->
         <section class="qr-section" id="qr-code">
             <h2>📱 Quick Access for Jury</h2>
             <p style="color: #57606a; margin-bottom: 25px; font-size: 1.1em;">
@@ -883,6 +941,9 @@
             <p style="margin-top: 10px; color: #586069; font-size: 0.9em;">
                 🔒 Videos are unlisted - only accessible via this repository
             </p>
+            <p style="margin-top: 5px; color: #2cbe4e; font-size: 0.9em; font-weight: 500;">
+                ✅ Squat demo video added: "qqR_Lphhp3w"
+            </p>
         </section>
     </main>
 
@@ -906,6 +967,9 @@
                 <p>Created by Ani101code • Last updated February 2026</p>
                 <p style="margin-top: 10px; font-size: 0.85em;">
                     MediaPipe • OpenCV • Python • Biomechanics Research
+                </p>
+                <p style="margin-top: 5px; color: #2cbe4e; font-size: 0.85em;">
+                    Squat Demo: qqR_Lphhp3w
                 </p>
             </div>
         </div>
