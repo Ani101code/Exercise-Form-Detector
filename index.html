@@ -451,44 +451,6 @@
             margin-top: 20px;
         }
         
-        /* Highlight for new video */
-        .new-video-badge {
-            background: #2cbe4e;
-            color: white;
-            font-size: 0.7em;
-            padding: 3px 8px;
-            border-radius: 20px;
-            margin-left: 10px;
-            text-transform: uppercase;
-            font-weight: bold;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.8;
-                background: #0366d6;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
-        
-        /* Video Update Banner */
-        .update-banner {
-            background: linear-gradient(135deg, #2cbe4e 0%, #1e7e34 100%);
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-            text-align: center;
-            font-weight: 500;
-            box-shadow: 0 4px 12px rgba(44, 190, 78, 0.3);
-        }
-        
         /* Responsive Design */
         @media (max-width: 768px) {
             .header h1 {
@@ -527,7 +489,8 @@
             <div class="stats">
                 <span>⭐ 0 stars</span>
                 <span>⑂ 0 forks</span>
-                <span>🐍 Python 100%</span>
+                <span>🐍 Python 55.2%</span>
+                <span>📄 HTML 44.8%</span>
                 <span>📅 Updated Feb 2026</span>
                 <span>📚 27 references</span>
             </div>
@@ -565,19 +528,19 @@
                 </div>
                 <div class="feature">
                     <h3>📊 Angle Calculation</h3>
-                    <p>Precise joint angle measurement (elbow, hip, knee, back) with vector-based calculation and hysteresis filtering.</p>
+                    <p>Precise joint angle measurement (elbow, hip, knee) with vector-based calculation and hysteresis filtering.</p>
                 </div>
                 <div class="feature">
                     <h3>🔄 Smart Rep Counting</h3>
-                    <p>Automatic repetition tracking with form validation, 2-second cooldown, and state machine for each exercise.</p>
+                    <p>Automatic repetition tracking with form validation, 1-2 second cooldown, and state machine for each exercise.</p>
                 </div>
                 <div class="feature">
                     <h3>⚠️ Form Correction</h3>
-                    <p>Identifies incorrect form: sagging hips, kipping, knee valgus, asymmetry, and partial range of motion.</p>
+                    <p>Identifies incorrect form: sagging hips, kipping, knee valgus/caving, knee flaring, asymmetry, and partial range of motion.</p>
                 </div>
                 <div class="feature">
                     <h3>🔊 Audio Feedback</h3>
-                    <p>Verbal cues for form correction using TTS (pyttsx3/win32com) with intelligent cooldown system.</p>
+                    <p>Verbal cues for form correction using TTS (pyttsx3/win32com) with intelligent 4-8 second cooldown system.</p>
                 </div>
                 <div class="feature">
                     <h3>📈 Session Tracking</h3>
@@ -585,11 +548,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Update Banner -->
-        <div class="update-banner">
-            🎉 NEW: Pull-up demo video added! Watch real-time kipping detection, asymmetry check, and full range of motion validation
-        </div>
 
         <!-- Demo Videos Section -->
         <section>
@@ -615,16 +573,15 @@
                         </iframe>
                     </div>
                     <p>
-                        <strong>Features:</strong> Elbow angle tracking • Hip position • Rep counting • Form correction demo
+                        <strong>Features:</strong> Elbow angle tracking (<90° down, >160° up) • Hip position (160-180°) • Knee angle (>150°) • Form correction demo
                     </p>
                 </div>
                 
-                <!-- Pull-up Video - NEW VIDEO ADDED -->
+                <!-- Pull-up Video -->
                 <div class="video-card">
                     <h3>
                         <span class="emoji">🔴</span> 
                         Pull-up Analysis
-                        <span class="new-video-badge">NEW</span>
                     </h3>
                     <div class="video-container">
                         <iframe width="815" height="458" src="https://www.youtube.com/embed/WB4bbG-Ci7E" 
@@ -636,7 +593,7 @@
                         </iframe>
                     </div>
                     <p>
-                        <strong>Features:</strong> Kipping detection • Asymmetry check (30° tolerance) • Full ROM requirement (150° at bottom, 80° at top) • Chin over bar validation • Real-time angle display
+                        <strong>Features:</strong> Kipping detection (hip angle <150°) • Asymmetry check (>25° difference) • Full ROM requirement (150° hang, 90° top) • Chin over bar validation
                     </p>
                 </div>
                 
@@ -656,7 +613,7 @@
                         </iframe>
                     </div>
                     <p>
-                        <strong>Features:</strong> Depth check (110° knee angle) • Knee tracking (valgus detection) • Back angle monitoring • Form correction feedback
+                        <strong>Features:</strong> Depth check (125° down, 155° up) • Knee tracking (caving in, flaring out) • Knee width ratio (<1.6x hip width) • Form correction feedback
                     </p>
                 </div>
             </div>
@@ -667,69 +624,71 @@
                 </p>
                 <p style="color: #586069; font-size: 0.95em;">
                     <strong>Push-up:</strong> <a href="https://youtu.be/Sq3WyI0eTN4" target="_blank" style="color: #0366d6;">Sq3WyI0eTN4</a> • 
-                    <strong>Pull-up:</strong> <a href="https://youtu.be/WB4bbG-Ci7E" target="_blank" style="color: #0366d6; font-weight: bold;">WB4bbG-Ci7E</a> • 
+                    <strong>Pull-up:</strong> <a href="https://youtu.be/WB4bbG-Ci7E" target="_blank" style="color: #0366d6;">WB4bbG-Ci7E</a> • 
                     <strong>Squat:</strong> <a href="https://youtu.be/qqR_Lphhp3w" target="_blank" style="color: #0366d6;">qqR_Lphhp3w</a>
-                </p>
-                <p style="color: #2cbe4e; font-size: 0.95em; margin-top: 10px;">
-                    ✅ Pull-up demo now available with complete form analysis
                 </p>
             </div>
         </section>
 
-        <!-- Form Requirements -->
+        <!-- Form Requirements - UPDATED from Python code -->
         <section class="info-card">
             <h2>📋 Strict Form Requirements</h2>
             <p style="margin-bottom: 20px; color: #586069;">
-                Based on biomechanics research and exercise science literature. Reps only count when ALL criteria are met.
+                Based on biomechanics research and exercise science literature. Reps only count when ALL criteria are met. 
+                Thresholds directly from Python code.
             </p>
             
             <div class="requirements-grid">
                 <div class="requirement-card">
                     <h4>💪 PUSH-UP</h4>
                     <ul class="requirement-list">
-                        <li>Down position: Elbow &lt; 90 deg</li>
-                        <li>Up position: Elbow &gt; 160 deg</li>
-                        <li>Body angle: 160-180 deg (straight)</li>
-                        <li>No sagging or piking</li>
-                        <li>No knee pushups (knee &gt; 150 deg)</li>
+                        <li>Down position: Elbow &lt; 90°</li>
+                        <li>Up position: Elbow &gt; 160°</li>
+                        <li>Body angle: 160-180° (straight)</li>
+                        <li>Hip ideal: 170° ±15° tolerance</li>
+                        <li>No knee pushups: knee &gt; 150°</li>
                         <li>Stand SIDEWAYS to camera</li>
+                        <li>Min down time: 0.2s</li>
                     </ul>
                 </div>
                 
                 <div class="requirement-card">
                     <h4>⬆️ PULL-UP</h4>
                     <ul class="requirement-list">
-                        <li>Top position: Elbow &lt; 80 deg</li>
-                        <li>Bottom position: Elbow &gt; 150 deg</li>
-                        <li>Body angle: &gt; 160 deg (no kipping)</li>
-                        <li>Keep legs still</li>
-                        <li>Pull evenly with both arms (asymmetry &lt; 30°)</li>
+                        <li>Top position: Elbow &lt; 90° (chin over bar)</li>
+                        <li>Bottom position: Elbow &gt; 150° (full hang)</li>
+                        <li>No kipping: Hip angle &gt; 150°</li>
+                        <li>Asymmetry tolerance: &lt; 25° difference</li>
+                        <li>Wrists must be above shoulders</li>
                         <li>Full range of motion required</li>
+                        <li>Min top time: 0.3s, min bottom: 0.3s</li>
                     </ul>
                 </div>
                 
                 <div class="requirement-card">
                     <h4>🦵 SQUAT</h4>
                     <ul class="requirement-list">
-                        <li>Up position: Knee &gt; 150 deg (standing)</li>
-                        <li>Down position: Knee &lt; 110 deg (parallel+)</li>
-                        <li>Chest up: Back angle 60-120 deg</li>
-                        <li>Knees track over toes (no valgus)</li>
-                        <li>Knees NOT too wide (max 1.2x hip width)</li>
-                        <li>Face camera directly</li>
+                        <li>Up position: Knee &gt; 155° (standing)</li>
+                        <li>Down position: Knee &lt; 125° (parallel+)</li>
+                        <li>Knee caving in: Knee inside hip margin</li>
+                        <li>Knee flaring out: Ratio &gt; 2.2x hip width</li>
+                        <li>Max knee width ratio: &lt; 1.6x hip width</li>
+                        <li>Hysteresis: 10°</li>
+                        <li>Min down time: 0.2s</li>
                     </ul>
                 </div>
             </div>
         </section>
 
-        <!-- Technical Implementation -->
+        <!-- Technical Implementation - UPDATED with Python specifics -->
         <section class="info-card">
             <h2>🔧 Technical Implementation</h2>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 20px;">
                 <div>
                     <h3 style="color: #0366d6; margin-bottom: 15px;">Core Stack</h3>
                     <ul style="list-style: none;">
-                        <li style="margin-bottom: 8px;">• Python 3.8+</li>
+                        <li style="margin-bottom: 8px;">• Python 3.8+ (55.2%)</li>
+                        <li style="margin-bottom: 8px;">• HTML/CSS (44.8%)</li>
                         <li style="margin-bottom: 8px;">• OpenCV (video capture)</li>
                         <li style="margin-bottom: 8px;">• MediaPipe Pose (33 landmarks)</li>
                         <li style="margin-bottom: 8px;">• NumPy (angle calculations)</li>
@@ -741,9 +700,10 @@
                     <ul style="list-style: none;">
                         <li style="margin-bottom: 8px;">• Median smoothing (10 frames)</li>
                         <li style="margin-bottom: 8px;">• Vector angle calculation</li>
-                        <li style="margin-bottom: 8px;">• State machine for rep counting</li>
-                        <li style="margin-bottom: 8px;">• 2-second rep cooldown</li>
+                        <li style="margin-bottom: 8px;">• State machine (WAITING/ARMED/BOTTOM)</li>
+                        <li style="margin-bottom: 8px;">• 1-2 second rep cooldown</li>
                         <li style="margin-bottom: 8px;">• Position validation (10 frames)</li>
+                        <li style="margin-bottom: 8px;">• Lost frame recovery (10 frames)</li>
                     </ul>
                 </div>
                 <div>
@@ -751,7 +711,8 @@
                     <ul style="list-style: none;">
                         <li style="margin-bottom: 8px;">• Form violation tracking per rep</li>
                         <li style="margin-bottom: 8px;">• Asymmetry detection (pull-ups)</li>
-                        <li style="margin-bottom: 8px;">• Audio cooldown system</li>
+                        <li style="margin-bottom: 8px;">• Knee valgus/flare detection</li>
+                        <li style="margin-bottom: 8px;">• Audio cooldown (4-8s)</li>
                         <li style="margin-bottom: 8px;">• Session persistence</li>
                         <li style="margin-bottom: 8px;">• Multi-exercise support</li>
                     </ul>
@@ -919,12 +880,13 @@
                     <li>Technical thresholds are heuristic ranges informed by literature and coaching guidelines.</li>
                     <li>EMG findings are exercise-variation dependent - references justify rule directionality.</li>
                     <li>Squat knee valgus detection based on Escamilla (2001) and Schoenfeld (2010).</li>
-                    <li>Pull-up asymmetry threshold (30°) based on bilateral EMG studies (Youdas et al., 2010).</li>
+                    <li>Pull-up asymmetry threshold (25°) based on bilateral EMG studies (Youdas et al., 2010).</li>
+                    <li>Knee width ratio threshold raised to 1.6 based on real-world testing.</li>
                 </ul>
             </div>
         </section>
 
-        <!-- Project Stats -->
+        <!-- Project Stats - UPDATED from Python code -->
         <section>
             <h2 style="font-size: 2.2em; margin: 40px 0 20px; text-align: center;">📊 Project Statistics</h2>
             <div class="stats-grid">
@@ -941,12 +903,24 @@
                     <div class="stat-label">Frame Smoothing</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">2s</div>
+                    <div class="stat-number">1-2s</div>
                     <div class="stat-label">Rep Cooldown</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">30°</div>
+                    <div class="stat-number">25°</div>
                     <div class="stat-label">Asymmetry Tolerance</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1.6</div>
+                    <div class="stat-label">Max Knee Ratio</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">55.2%</div>
+                    <div class="stat-label">Python</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">44.8%</div>
+                    <div class="stat-label">HTML</div>
                 </div>
             </div>
         </section>
@@ -979,7 +953,7 @@
                 🔒 Videos are unlisted - only accessible via this repository
             </p>
             <p style="margin-top: 5px; color: #2cbe4e; font-size: 0.9em; font-weight: 500;">
-                ✅ All demo videos added: Push-up • Pull-up • Squat
+                ✅ Python 55.2% • HTML 44.8%
             </p>
         </section>
     </main>
@@ -1003,7 +977,7 @@
             <div class="copyright">
                 <p>Created by Ani101code • Last updated February 2026</p>
                 <p style="margin-top: 10px; font-size: 0.85em;">
-                    MediaPipe • OpenCV • Python • Biomechanics Research
+                    MediaPipe • OpenCV • Python 55.2% • HTML 44.8% • Biomechanics Research
                 </p>
                 <p style="margin-top: 5px; color: #2cbe4e; font-size: 0.85em;">
                     Demo Videos: Sq3WyI0eTN4 • WB4bbG-Ci7E • qqR_Lphhp3w
