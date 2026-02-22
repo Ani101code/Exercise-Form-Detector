@@ -167,7 +167,7 @@ class ExerciseAudioFeedback:
         
         if "Good" in text or "Excellent" in text:
             cooldown_needed = self.rep_cooldown
-        elif any(word in text.lower() for word in ["too", "flaring", "kipping", "straight", "raise", "lower"]):
+        elif any(word in text.lower() for word in ["too", "flaring", "kipping", "straight", "raise", "lower", "knees", "wide"]):
             cooldown_needed = self.form_warning_cooldown
         
         if current_time - self.last_feedback_time > cooldown_needed:
@@ -194,8 +194,9 @@ class ExerciseFormAnalyzer:
         self.elbow_buffer = deque(maxlen=10)
         self.shoulder_buffer = deque(maxlen=10)
         self.hip_buffer = deque(maxlen=10)
+        self.knee_width_buffer = deque(maxlen=10)  # For squat knee width
         
-        # REMOVED DIP from exercises list
+        # Exercises list
         self.exercises = ["PUSH-UP", "PULL-UP", "SQUAT"]
         self.current_exercise = 0
         self.stage = "UP"
@@ -213,7 +214,7 @@ class ExerciseFormAnalyzer:
         self.last_rep_time = 0
         self.rep_cooldown = 2.0
         
-        # GOOD FORM REQUIREMENTS - REMOVED DIP THRESHOLDS
+        # GOOD FORM REQUIREMENTS
         self.exercise_thresholds = {
             "PUSH-UP": {
                 "elbow_down": 90,
@@ -239,15 +240,19 @@ class ExerciseFormAnalyzer:
                 "min_bottom_time": 0.3,
             },
             "SQUAT": {
-                "knee_up": 150,        # More forgiving: was 160, now 150
-                "knee_down": 110,      # More forgiving: was 100, now 110
-                "hip_up": 150,         # More forgiving
-                "hip_down": 80,        # Bottom of squat
-                "back_min": 60,        # More forgiving: was 70
-                "back_max": 120,       # More forgiving: was 110
+                "knee_up": 155,  # Must stand up to 155 deg to complete rep
+                "knee_down": 125,  # Must squat to 125 deg - achievable parallel depth
+                "hip_up": 150,
+                "hip_down": 80,
+                "back_min": 0,    # DISABLED - back angle unreliable from front-facing camera
+                "back_max": 180,  # DISABLED - was causing silent form violations
+                # FIX: Raised from 1.2 to 1.6 — 1.2 was far too strict.
+                # Most people naturally squat with knees slightly wider than hips.
+                # 1.6 allows knees up to 60% wider than hip width before flagging.
+                "max_knee_width_ratio": 1.6,
                 "stage_names": ["UP", "DOWN"],
                 "hysteresis": 10,
-                "min_down_time": 0.2,  # Reduced from 0.3
+                "min_down_time": 0.2,
                 "min_up_time": 0.2,
             }
         }
@@ -262,17 +267,17 @@ class ExerciseFormAnalyzer:
         self.switch_cooldown = 1.0
         
         self.last_angle_display = 0
-        self.debug_interval = 0.5  # More frequent debugging
+        self.debug_interval = 0.5
         self.last_angles = [0, 0, 0]
         
         # Track form quality for current rep
         self.current_rep_has_good_form = True
         self.form_violations_in_rep = []
         
-        # Position validation - ensure user is in correct position
+        # Position validation
         self.in_exercise_position = False
         self.position_check_frames = 0
-        self.frames_needed_for_position = 10  # Reduced from 15 to 10 frames (~0.3s)
+        self.frames_needed_for_position = 10
 
     def calculate_angle(self, a, b, c):
         try:
@@ -301,6 +306,35 @@ class ExerciseFormAnalyzer:
             
         except Exception as e:
             return 180
+    
+    def calculate_knee_width_ratio(self, left_hip, right_hip, left_knee, right_knee):
+        """
+        Calculate knee width relative to hip width.
+        
+        FIX NOTE: MediaPipe x-coordinates are normalized 0-1 across the frame width.
+        When squatting facing the camera, the knee and hip x-coords are used to
+        measure lateral spread. This is only meaningful when facing the camera directly.
+        
+        The ratio compares knee spread to hip spread. A ratio of 1.0 means knees
+        are exactly as wide as hips. Ratios above the threshold flag as "too wide".
+        """
+        try:
+            left_hip_x = left_hip.x
+            right_hip_x = right_hip.x
+            left_knee_x = left_knee.x
+            right_knee_x = right_knee.x
+            
+            hip_width = abs(left_hip_x - right_hip_x)
+            knee_width = abs(left_knee_x - right_knee_x)
+            
+            if hip_width < 0.01:
+                return 1.0
+            
+            ratio = knee_width / hip_width
+            return ratio
+            
+        except Exception as e:
+            return 1.0
     
     def analyze_pushup(self, landmarks, thresholds):
         """Pushup analysis - ONLY COUNT GOOD FORM"""
@@ -348,13 +382,11 @@ class ExerciseFormAnalyzer:
         
         self.last_angles = [smooth_elbow, 0, smooth_hip]
         
-        # CHECK IF IN PLANK/PUSHUP POSITION
-        # Requirements: Arms somewhat extended, body straight, on toes (knees extended)
         is_in_position = (
-            smooth_elbow > 120 and  # More forgiving - arms fairly extended
-            smooth_hip > 140 and    # More forgiving - body fairly straight
-            smooth_knee > 140 and   # More forgiving - on toes or nearly
-            abs(left_shoulder.y - right_shoulder.y) < 0.2  # More forgiving shoulders level
+            smooth_elbow > 120 and
+            smooth_hip > 140 and
+            smooth_knee > 140 and
+            abs(left_shoulder.y - right_shoulder.y) < 0.2
         )
         
         if is_in_position:
@@ -391,14 +423,6 @@ class ExerciseFormAnalyzer:
                 "form_issue": False
             }
         
-        # Check if in proper position before counting
-        if not self.in_exercise_position:
-            feedback = "Get into PLANK position (or just start doing pushups!)"
-            # Still process the rep even if not in "perfect" position yet
-            # This is more forgiving
-            pass  # Don't return early, let it continue to count
-        
-        # CHECK FORM - Track violations
         hip_deviation = abs(smooth_hip - thresholds["hip_ideal"])
         
         if hip_deviation > thresholds["hip_tolerance"]:
@@ -424,7 +448,6 @@ class ExerciseFormAnalyzer:
                     self.last_form_warning = violation
                     self.last_form_warning_time = current_time
         
-        # Check if on knees (not allowed)
         if smooth_knee < 150:
             form_issue = True
             violation = "on_knees"
@@ -436,7 +459,6 @@ class ExerciseFormAnalyzer:
                 self.last_form_warning = violation
                 self.last_form_warning_time = current_time
         
-        # REP COUNTING LOGIC
         if smooth_elbow < thresholds["elbow_down"]:
             if self.stage == "UP":
                 self.stage = "DOWN"
@@ -457,7 +479,6 @@ class ExerciseFormAnalyzer:
                         self.stage = "UP"
                         self.stage_timer = current_time
                         
-                        # ONLY COUNT IF FORM WAS GOOD
                         if self.current_rep_has_good_form and not self.form_violations_in_rep:
                             self.reps += 1
                             self.session_reps["PUSH-UP"] += 1
@@ -469,7 +490,6 @@ class ExerciseFormAnalyzer:
                             
                             self.last_form_warning = None
                         else:
-                            # Bad form - tell user IMMEDIATELY what went wrong
                             violations_text = ""
                             if "hips_low" in self.form_violations_in_rep:
                                 violations_text = "hips too low"
@@ -508,343 +528,307 @@ class ExerciseFormAnalyzer:
         }
     
     def analyze_pullup(self, landmarks, thresholds):
-        """Pullup analysis - ONLY COUNT GOOD FORM"""
+        """
+        Pull-up counter.
+
+        State machine:
+          HANG -> arms extended (elbow > 150), form issue cleared while here
+          UP   -> chin over bar (elbow < 90)
+          HANG -> back to hang = rep complete
+
+        Form checks (latch during rep, clear when back to full hang):
+          - Kipping: hip angle < 150 (body swinging)
+          - Asymmetry: left/right elbow differ by > 25 deg
+
+        Must reach TOP_ANGLE to count - partial reps don't count.
+        """
         try:
-            left_shoulder = landmarks[11]
-            left_elbow = landmarks[13]
-            left_wrist = landmarks[15]
-            left_hip = landmarks[23]
-            left_knee = landmarks[25]
-        except:
-            return self._get_default_analysis()
-        
-        elbow_angle = self.calculate_angle(left_shoulder, left_elbow, left_wrist)
-        shoulder_angle = self.calculate_angle(left_hip, left_shoulder, left_elbow)
-        hip_angle = self.calculate_angle(left_shoulder, left_hip, left_knee)
-        
-        self.elbow_buffer.append(elbow_angle)
-        self.shoulder_buffer.append(shoulder_angle)
-        self.hip_buffer.append(hip_angle)
-        
-        smooth_elbow = np.median(list(self.elbow_buffer))
-        smooth_shoulder = np.median(list(self.shoulder_buffer))
-        smooth_hip = np.median(list(self.hip_buffer))
-        
-        feedback = ""
-        audio_feedback = ""
-        form_issue = False
-        
-        current_time = time.time()
-        if self.stage_timer == 0:
-            self.stage_timer = current_time
-        self.current_stage_duration = current_time - self.stage_timer
-        
-        time_since_switch = current_time - self.exercise_switch_time
-        if time_since_switch < self.switch_cooldown:
-            feedback = f"Get ready... ({int(self.switch_cooldown - time_since_switch)}s)"
-            return {
-                "angles": [smooth_elbow, smooth_shoulder, smooth_hip],
-                "feedback": feedback,
-                "audio_feedback": "",
-                "rep_counted": False,
-                "form_issue": False
-            }
-        
-        # Form check - kipping
-        if smooth_hip < thresholds["hip_min"]:
-            form_issue = True
-            violation = "kipping"
-            if violation not in self.form_violations_in_rep:
-                self.form_violations_in_rep.append(violation)
-            
-            if current_time - self.last_form_warning_time > self.warning_cooldown:
-                feedback = "NO KIPPING - Keep legs still"
-                audio_feedback = "No kipping, keep legs still"
-                self.last_form_warning = violation
-                self.last_form_warning_time = current_time
-        
-        # TOP position
-        if smooth_elbow < (thresholds["elbow_top"] + thresholds["hysteresis"]):
-            if self.stage == "BOTTOM":
-                if self.current_stage_duration > thresholds["min_bottom_time"]:
-                    self.stage = "TOP"
-                    self.stage_timer = current_time
-                    self.current_rep_has_good_form = True
-                    self.form_violations_in_rep = []
-                    if not form_issue:
-                        feedback = "Great top position!"
-            else:
-                if form_issue:
-                    self.current_rep_has_good_form = False
-        
-        # BOTTOM position
-        elif smooth_elbow > (thresholds["elbow_bottom"] - thresholds["hysteresis"]):
-            if self.stage == "TOP":
-                if self.current_stage_duration > thresholds["min_top_time"]:
-                    if current_time - self.last_rep_time > self.rep_cooldown:
-                        self.stage = "BOTTOM"
-                        self.stage_timer = current_time
-                        
-                        if self.current_rep_has_good_form and not self.form_violations_in_rep:
-                            self.reps += 1
-                            self.session_reps["PULL-UP"] += 1
-                            self.last_rep_time = current_time
-                            
-                            feedback = f"PULL-UP {self.reps} - EXCELLENT!"
-                            audio_feedback = f"Good pull up {self.reps}"
-                            self.last_form_warning = None
-                        else:
-                            feedback = f"Rep NOT COUNTED - {', '.join(self.form_violations_in_rep)}"
-                            audio_feedback = "Form needs work"
-                        
-                        self.current_rep_has_good_form = True
-                        self.form_violations_in_rep = []
-                    else:
-                        if not feedback:
-                            feedback = "Control your descent"
-            else:
-                if form_issue:
-                    self.current_rep_has_good_form = False
-        
-        if not feedback:
-            if self.stage == "BOTTOM":
-                feedback = "Pull with back muscles"
-            else:
-                feedback = "Lower with control"
-        
-        return {
-            "angles": [smooth_elbow, smooth_shoulder, smooth_hip],
-            "feedback": feedback,
-            "audio_feedback": audio_feedback,
-            "rep_counted": "EXCELLENT" in feedback and self.reps > 0,
-            "form_issue": form_issue
-        }
-    
-    def analyze_squat(self, landmarks, thresholds):
-        """Squat analysis - IMPROVED DEBUGGING VERSION"""
-        try:
-            left_shoulder = landmarks[11]
-            left_hip = landmarks[23]
-            left_knee = landmarks[25]
-            left_ankle = landmarks[27]
-            
+            left_shoulder  = landmarks[11]
+            left_elbow     = landmarks[13]
+            left_wrist     = landmarks[15]
+            left_hip       = landmarks[23]
+            left_knee      = landmarks[25]
             right_shoulder = landmarks[12]
-            right_hip = landmarks[24]
-            right_knee = landmarks[26]
-            right_ankle = landmarks[28]
-            
+            right_elbow    = landmarks[14]
+            right_wrist    = landmarks[16]
+            right_hip      = landmarks[24]
+            right_knee     = landmarks[26]
         except:
             return self._get_default_analysis()
-        
-        # Calculate angles for squat
-        left_knee_angle = self.calculate_angle(left_hip, left_knee, left_ankle)
-        left_hip_angle = self.calculate_angle(left_shoulder, left_hip, left_knee)
-        # Better back angle calculation - between torso and vertical line
-        left_back_angle = self.calculate_angle(
-            left_hip, 
-            left_shoulder, 
-            [left_shoulder.x, left_shoulder.y - 0.1]  # Point directly above shoulder
-        )
-        
-        right_knee_angle = self.calculate_angle(right_hip, right_knee, right_ankle)
-        right_hip_angle = self.calculate_angle(right_shoulder, right_hip, right_knee)
-        
-        # Use average of both sides for better accuracy
-        knee_angle = (left_knee_angle + right_knee_angle) / 2
-        hip_angle = (left_hip_angle + right_hip_angle) / 2
-        back_angle = left_back_angle
-        
-        self.elbow_buffer.append(knee_angle)
+
+        # Angles
+        l_elbow = self.calculate_angle(left_shoulder,  left_elbow,  left_wrist)
+        r_elbow = self.calculate_angle(right_shoulder, right_elbow, right_wrist)
+        l_hip   = self.calculate_angle(left_shoulder,  left_hip,    left_knee)
+        r_hip   = self.calculate_angle(right_shoulder, right_hip,   right_knee)
+
+        elbow_angle = (l_elbow + r_elbow) / 2.0
+        hip_angle   = (l_hip   + r_hip)   / 2.0
+        asym        = abs(l_elbow - r_elbow)
+
+        self.elbow_buffer.append(elbow_angle)
         self.hip_buffer.append(hip_angle)
-        self.shoulder_buffer.append(back_angle)
-        
-        smooth_knee = np.median(list(self.elbow_buffer))
-        smooth_hip = np.median(list(self.hip_buffer))
-        smooth_back = np.median(list(self.shoulder_buffer))
-        
-        self.last_angles = [smooth_knee, smooth_hip, smooth_back]
-        
+        smooth_elbow = np.median(list(self.elbow_buffer))
+        smooth_hip   = np.median(list(self.hip_buffer))
+
         current_time = time.time()
-        
-        # Enhanced debugging - show angles more frequently
-        if current_time - self.last_angle_display > self.debug_interval:
-            print(f"[SQUAT DEBUG] Knee: {int(smooth_knee)}° | Hip: {int(smooth_hip)}° | Back: {int(smooth_back)}°")
-            print(f"              Stage: {self.stage} | Last rep: {time.time() - self.last_rep_time:.1f}s ago")
-            print(f"              Requirements: UP>150° | DOWN<110° | Back 60-120°")
-            
-            # Show current position status
-            if smooth_knee > thresholds["knee_up"]:
-                print(f"              Status: STANDING ✓")
-            elif smooth_knee < thresholds["knee_down"]:
-                print(f"              Status: BOTTOM ✓ (depth: {int(smooth_knee)}°)")
-            else:
-                print(f"              Status: MID-RANGE ({int(smooth_knee)}°)")
-            
-            if self.form_violations_in_rep:
-                print(f"              Form issues: {', '.join(self.form_violations_in_rep)}")
-            self.last_angle_display = current_time
-        
-        feedback = ""
-        audio_feedback = ""
-        form_issue = False
-        
         if self.stage_timer == 0:
             self.stage_timer = current_time
-        self.current_stage_duration = current_time - self.stage_timer
-        
-        time_since_switch = current_time - self.exercise_switch_time
-        if time_since_switch < self.switch_cooldown:
-            feedback = f"Get ready... ({int(self.switch_cooldown - time_since_switch)}s)"
-            return {
-                "angles": [smooth_knee, smooth_hip, smooth_back],
-                "feedback": feedback,
-                "audio_feedback": "",
-                "rep_counted": False,
-                "form_issue": False
-            }
-        
-        # Reset form violations for new rep
-        if self.stage == "UP" and smooth_knee < 140:
-            # Starting new descent, clear old violations
-            if len(self.form_violations_in_rep) > 0 and not self.current_rep_has_good_form:
-                self.form_violations_in_rep = []
-        
-        # CHECK FORM - Track violations
-        # Back angle check - make it more forgiving
-        back_min = thresholds["back_min"]
-        back_max = thresholds["back_max"]
-        
-        if not back_min <= smooth_back <= back_max:
-            form_issue = True
-            violation = "back_lean"
-            if violation not in self.form_violations_in_rep:
-                self.form_violations_in_rep.append(violation)
-            
-            # Only warn occasionally
-            if current_time - self.last_form_warning_time > self.warning_cooldown:
-                if smooth_back < back_min:
-                    feedback = f"CHEST UP (Back: {int(smooth_back)}°)"
-                    audio_feedback = "Chest up more"
-                else:
-                    feedback = f"LEAN FORWARD (Back: {int(smooth_back)}°)"
-                    audio_feedback = "Lean forward slightly"
-                self.last_form_warning = violation
-                self.last_form_warning_time = current_time
-            else:
-                # Still track but don't show feedback
-                pass
-        
-        # Check for knee valgus - more lenient
-        left_knee_x = left_knee.x
-        right_knee_x = right_knee.x
-        left_hip_x = left_hip.x
-        right_hip_x = right_hip.x
-        
-        knee_width = abs(left_knee_x - right_knee_x)
-        hip_width = abs(left_hip_x - right_hip_x)
-        
-        # Only check knee valgus when in deep squat
-        if smooth_knee < 120 and knee_width < hip_width * 0.8:  # More lenient: 0.8 instead of 0.7
-            form_issue = True
-            violation = "knee_valgus"
-            if violation not in self.form_violations_in_rep:
-                self.form_violations_in_rep.append(violation)
-            if not feedback and current_time - self.last_form_warning_time > self.warning_cooldown:
-                feedback = "KNEES OUT"
-                audio_feedback = "Push knees out"
-                self.last_form_warning = violation
-                self.last_form_warning_time = current_time
-        
-        # REP COUNTING LOGIC - SIMPLIFIED AND MORE FORGIVING
-        # DOWN position (squatting)
-        if smooth_knee <= thresholds["knee_down"]:  # At or below parallel
-            if self.stage == "UP":
-                # Transition from UP to DOWN
-                self.stage = "DOWN"
+
+        HANG_ANGLE = 150   # arms fully extended
+        TOP_ANGLE  = 90    # chin over bar
+        HIP_MIN    = 150   # below this = kipping
+        ASYM_MAX   = 25    # elbow difference = uneven pull
+
+        if not hasattr(self, '_form_issue'):
+            self._form_issue = ""
+        if not hasattr(self, '_reached_top'):
+            self._reached_top = False
+
+        in_rep = (self.stage == "UP")
+
+        # Check chin over bar: nose y must be above (less than) wrist y
+        try:
+            nose = landmarks[0]
+            avg_wrist_y = (left_wrist.y + right_wrist.y) / 2.0
+            chin_over_bar = nose.y < avg_wrist_y
+        except:
+            chin_over_bar = True  # can't check, don't penalise
+
+        # Track if chin cleared the bar at any point during this pull
+        if in_rep and chin_over_bar:
+            self._reached_top = True
+
+        # Latch form issues during the pull
+        if in_rep:
+            if smooth_hip < HIP_MIN and not self._form_issue:
+                self._form_issue = "kipping"
+            elif asym > ASYM_MAX and not self._form_issue:
+                self._form_issue = "uneven pull"
+
+        # Debug
+        if current_time - self.last_angle_display > self.debug_interval:
+            print(f"[PULLUP] Elbow:{smooth_elbow:.1f} Hip:{smooth_hip:.1f} Asym:{asym:.1f} Stage:{self.stage} Reps:{self.reps}")
+            print(f"         Issue:'{self._form_issue}'")
+            self.last_angle_display = current_time
+
+        # Switch cooldown
+        if current_time - self.exercise_switch_time < self.switch_cooldown:
+            self.stage = "HANG"
+            self._form_issue = ""
+            self._reached_top = False
+            rem = self.switch_cooldown - (current_time - self.exercise_switch_time)
+            return {"angles": [smooth_elbow, 0, smooth_hip], "feedback": f"Get ready... ({rem:.0f}s)",
+                    "audio_feedback": "", "rep_counted": False, "form_issue": False}
+
+        feedback = ""
+        audio_feedback = ""
+        rep_counted = False
+        form_issue = False
+
+        # ── STATE MACHINE ──────────────────────────────────────────
+
+        # ── HANGING VALIDATION ────────────────────────────────────
+        # Wrists must be ABOVE shoulders (lower y = higher in frame).
+        # If not, person is not on a bar - ignore all rep counting.
+        avg_wrist_y    = (left_wrist.y  + right_wrist.y)  / 2.0
+        avg_shoulder_y = (left_shoulder.y + right_shoulder.y) / 2.0
+        is_hanging = avg_wrist_y < avg_shoulder_y  # wrists higher than shoulders
+
+        if not is_hanging:
+            return {"angles": [smooth_elbow, 0, smooth_hip],
+                    "feedback": "Get on the bar - wrists must be above shoulders",
+                    "audio_feedback": "", "rep_counted": False, "form_issue": False}
+
+        if self.stage == "HANG":
+            # While hanging with arms extended, clear the form flag
+            if smooth_elbow >= HANG_ANGLE:
+                self._form_issue = ""
+
+            if smooth_elbow <= TOP_ANGLE:
+                # Reached the top - chin over bar
+                self.stage = "UP"
                 self.stage_timer = current_time
-                self.current_rep_has_good_form = True
-                print(f"✓ DOWN position - Knee: {int(smooth_knee)}°")
-                
-                if not form_issue:
-                    feedback = "Good depth! Push up!"
-                else:
-                    feedback = "At depth - fix form on way up"
-        
-        # UP position (standing)
-        elif smooth_knee >= thresholds["knee_up"]:  # Fully standing
-            if self.stage == "DOWN":
-                # Check if we held the bottom long enough
-                if self.current_stage_duration >= thresholds["min_down_time"]:
-                    # Check rep cooldown
-                    rep_cooldown_remaining = self.rep_cooldown - (current_time - self.last_rep_time)
-                    if rep_cooldown_remaining <= 0:
-                        # Complete the rep
-                        self.stage = "UP"
-                        self.stage_timer = current_time
-                        
-                        # COUNT THE REP - More forgiving logic
-                        should_count = True
-                        if self.form_violations_in_rep:
-                            # Only don't count if there were SERIOUS violations
-                            if "knee_valgus" in self.form_violations_in_rep:
-                                should_count = False
-                            elif "back_lean" in self.form_violations_in_rep and smooth_back < 60:
-                                should_count = False
-                        
-                        if should_count and self.current_rep_has_good_form:
-                            self.reps += 1
-                            self.session_reps["SQUAT"] += 1
-                            self.last_rep_time = current_time
-                            
-                            feedback = f"SQUAT {self.reps} - EXCELLENT!"
-                            audio_feedback = f"Good squat {self.reps}"
-                            print(f"✓ REP #{self.reps} COUNTED!")
-                            
-                            self.last_form_warning = None
-                        else:
-                            # Tell user why rep wasn't counted
-                            if "back_lean" in self.form_violations_in_rep:
-                                reason = "leaning too far" if smooth_back < back_min else "too upright"
-                            elif "knee_valgus" in self.form_violations_in_rep:
-                                reason = "knees caving in"
-                            else:
-                                reason = "form issues"
-                            
-                            feedback = f"Rep NOT COUNTED - {reason}"
-                            audio_feedback = f"Form needs work"
-                            print(f"✗ Rep not counted - {reason}")
-                        
-                        # Reset for next rep
-                        self.current_rep_has_good_form = True
-                        self.form_violations_in_rep = []
+                feedback = "Good! Lower with control."
+                print(f"  -> TOP at {smooth_elbow:.1f}")
+            else:
+                # Live form warnings while on the way up
+                if smooth_hip < HIP_MIN and current_time - self.last_form_warning_time > 3.0:
+                    feedback = "NO KIPPING - keep body still!"
+                    self.last_form_warning_time = current_time
+                    form_issue = True
+                elif asym > ASYM_MAX and current_time - self.last_form_warning_time > 3.0:
+                    feedback = "PULL EVENLY - both arms!"
+                    self.last_form_warning_time = current_time
+                    form_issue = True
+                if not feedback:
+                    if smooth_elbow >= HANG_ANGLE:
+                        feedback = "Pull up!"
                     else:
-                        if not feedback:
-                            feedback = f"Wait {rep_cooldown_remaining:.1f}s"
+                        feedback = f"Keep pulling! ({smooth_elbow:.0f} deg)"
+
+        elif self.stage == "UP":
+            if smooth_elbow >= HANG_ANGLE:
+                # Back to full hang - evaluate the rep
+                issue = self._form_issue
+                self._form_issue = ""
+                self.stage = "HANG"
+                self.stage_timer = current_time
+
+                # Also check chin-over-bar was reached during this rep
+                if not self._reached_top and not issue:
+                    issue = "chin did not clear bar"
+                reached = self._reached_top
+                self._reached_top = False  # reset for next rep
+
+                if current_time - self.last_rep_time > 1.0:
+                    self.last_rep_time = current_time
+                    if issue:
+                        form_issue = True
+                        feedback = f"NOT COUNTED - {issue}!"
+                        audio_feedback = f"Rep not counted. {issue}."
+                        print(f"  -> NOT COUNTED: {issue}")
+                    else:
+                        self.reps += 1
+                        self.session_reps["PULL-UP"] += 1
+                        rep_counted = True
+                        feedback = f"PULL-UP {self.reps} - EXCELLENT!"
+                        audio_feedback = f"Good pull up {self.reps}"
+                        print(f"  -> REP #{self.reps} COUNTED!")
+            else:
+                # Still at top or lowering
+                if smooth_elbow <= TOP_ANGLE:
+                    feedback = "Lower with control."
                 else:
-                    if not feedback:
-                        feedback = "Hold depth longer"
-        
-        # MID-RANGE feedback
-        if not feedback:
-            if self.stage == "UP":
-                if smooth_knee > 140:
-                    feedback = "Ready - squat down!"
-                else:
-                    feedback = "Going down..."
-            else:  # DOWN stage
-                if smooth_knee > thresholds["knee_down"]:
-                    feedback = "Go deeper!"
-                else:
-                    feedback = "Push up to complete"
-        
-        return {
-            "angles": [smooth_knee, smooth_hip, smooth_back],
-            "feedback": feedback,
-            "audio_feedback": audio_feedback,
-            "rep_counted": "EXCELLENT" in feedback and self.reps > 0,
-            "form_issue": form_issue
-        }
-    
+                    feedback = f"All the way down! ({smooth_elbow:.0f} deg)"
+
+        return {"angles": [smooth_elbow, 0, smooth_hip], "feedback": feedback,
+                "audio_feedback": audio_feedback, "rep_counted": rep_counted, "form_issue": form_issue}
+
+    def analyze_squat(self, landmarks, thresholds):
+        try:
+            left_hip    = landmarks[23]
+            left_knee   = landmarks[25]
+            left_ankle  = landmarks[27]
+            right_hip   = landmarks[24]
+            right_knee  = landmarks[26]
+            right_ankle = landmarks[28]
+        except:
+            return self._get_default_analysis()
+
+        lk = self.calculate_angle(left_hip,  left_knee,  left_ankle)
+        rk = self.calculate_angle(right_hip, right_knee, right_ankle)
+        self.elbow_buffer.append((lk + rk) / 2.0)
+        smooth_knee = np.median(list(self.elbow_buffer))
+
+        current_time = time.time()
+        if self.stage_timer == 0:
+            self.stage_timer = current_time
+
+        KNEE_STANDING = 145
+        KNEE_DOWN = thresholds["knee_down"]  # 125
+        KNEE_UP   = thresholds["knee_up"]    # 155
+        CAVE_MARGIN = 0.10
+        FLARE_RATIO = 2.2
+
+        if not hasattr(self, '_form_issue'):
+            self._form_issue = ""
+
+        # Cave / flare — only latched while in BOTTOM stage
+        in_squat   = (self.stage == "BOTTOM")
+        hip_width  = abs(left_hip.x  - right_hip.x)
+        knee_width = abs(left_knee.x - right_knee.x)
+        knees_caving  = in_squat and (
+            left_knee.x  < (left_hip.x  - CAVE_MARGIN) or
+            right_knee.x > (right_hip.x + CAVE_MARGIN)
+        )
+        knees_flaring = in_squat and (hip_width > 0.01) and (knee_width > hip_width * FLARE_RATIO)
+
+        if in_squat and knees_caving  and not self._form_issue:
+            self._form_issue = "knees caving in"
+        if in_squat and knees_flaring and not self._form_issue:
+            self._form_issue = "knees flaring out"
+
+        # Debug
+        if current_time - self.last_angle_display > self.debug_interval:
+            print(f"[SQUAT] Knee:{smooth_knee:.1f} Stage:{self.stage} Reps:{self.reps} Issue:'{self._form_issue}'")
+            print(f"        HipW:{hip_width:.3f} KneeW:{knee_width:.3f} Cave:{knees_caving} Flare:{knees_flaring}")
+            self.last_angle_display = current_time
+
+        # Switch cooldown
+        if current_time - self.exercise_switch_time < self.switch_cooldown:
+            self.stage = "WAITING"
+            self._form_issue = ""
+            rem = self.switch_cooldown - (current_time - self.exercise_switch_time)
+            return {"angles": [smooth_knee, 0, 0], "feedback": f"Get ready... ({rem:.0f}s)",
+                    "audio_feedback": "", "rep_counted": False, "form_issue": False}
+
+        feedback = ""
+        audio_feedback = ""
+        rep_counted = False
+        form_issue = False
+
+        # ── STATE MACHINE ─────────────────────────────────────────
+
+        if self.stage == "WAITING":
+            self._form_issue = ""
+            if smooth_knee >= KNEE_STANDING:
+                self.stage = "ARMED"
+                self.stage_timer = current_time
+                feedback = "Ready! Squat down!"
+                print(f"  -> ARMED at {smooth_knee:.1f}")
+            else:
+                feedback = f"Stand up straight! ({smooth_knee:.0f} need {KNEE_STANDING})"
+
+        elif self.stage == "ARMED":
+            # Clear form issue only while fully upright — guarantees clean slate
+            if smooth_knee >= KNEE_UP:
+                self._form_issue = ""
+            if smooth_knee <= KNEE_DOWN:
+                self.stage = "BOTTOM"
+                self.stage_timer = current_time
+                feedback = "Good depth! Stand up!"
+                print(f"  -> BOTTOM at {smooth_knee:.1f}")
+            else:
+                feedback = "Squat down!" if smooth_knee >= KNEE_UP else f"Deeper! ({smooth_knee:.0f} need <{KNEE_DOWN})"
+
+        elif self.stage == "BOTTOM":
+            if smooth_knee >= KNEE_UP:
+                issue = self._form_issue   # snapshot before clearing
+                self._form_issue = ""      # clear immediately
+                self.stage = "ARMED"
+                self.stage_timer = current_time
+
+                if current_time - self.last_rep_time > 1.0:
+                    self.last_rep_time = current_time
+                    if issue:
+                        form_issue = True
+                        feedback = f"NOT COUNTED - {issue}!"
+                        audio_feedback = f"Rep not counted. {issue}."
+                        print(f"  -> NOT COUNTED: {issue}")
+                    else:
+                        self.reps += 1
+                        self.session_reps["SQUAT"] += 1
+                        rep_counted = True
+                        feedback = f"SQUAT {self.reps} - EXCELLENT!"
+                        audio_feedback = f"Good squat {self.reps}"
+                        print(f"  -> REP #{self.reps} COUNTED!")
+            else:
+                # Live warning while squatting
+                if knees_caving and current_time - self.last_form_warning_time > 3.0:
+                    feedback = "KNEES CAVING IN - push out!"
+                    self.last_form_warning_time = current_time
+                    form_issue = True
+                elif knees_flaring and current_time - self.last_form_warning_time > 3.0:
+                    feedback = "KNEES FLARING OUT - bring in!"
+                    self.last_form_warning_time = current_time
+                    form_issue = True
+                if not feedback:
+                    feedback = f"Stand up! ({smooth_knee:.0f})"
+
+        return {"angles": [smooth_knee, 0, 0], "feedback": feedback,
+                "audio_feedback": audio_feedback, "rep_counted": rep_counted, "form_issue": form_issue}
+
     def _get_default_analysis(self):
         if not self.session_active:
             return {
@@ -895,12 +879,12 @@ class ExerciseFormAnalyzer:
         self.elbow_buffer.clear()
         self.shoulder_buffer.clear()
         self.hip_buffer.clear()
+        self.knee_width_buffer.clear()
         self.last_form_warning = None
         self.last_form_warning_time = 0
         self.current_rep_has_good_form = True
         self.form_violations_in_rep = []
         
-        # Reset position validation
         self.in_exercise_position = False
         self.position_check_frames = 0
         
@@ -908,13 +892,11 @@ class ExerciseFormAnalyzer:
         return self.exercises[self.current_exercise]
     
     def reset_current_exercise(self):
-        """Reset only current exercise counter"""
         self.reps = 0
         print(f"Current {self.exercises[self.current_exercise]} counter reset to 0")
         return True
     
     def reset_session(self):
-        """Reset ALL exercise session counters"""
         for exercise in self.session_reps:
             self.session_reps[exercise] = 0
         self.reps = 0
@@ -925,7 +907,6 @@ class ExerciseFormAnalyzer:
 # UI DRAWING
 # =========================================================
 def draw_ui(frame, form_analyzer, audio, width, height):
-    # Left panel - Current exercise info
     cv2.rectangle(frame, (20, 20), (400, 300), (25, 25, 40), -1)
     cv2.rectangle(frame, (20, 20), (400, 300), (0, 200, 255), 2)
     
@@ -953,25 +934,21 @@ def draw_ui(frame, form_analyzer, audio, width, height):
     cv2.putText(frame, "GOOD FORM ONLY!",
                (40, 280), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 255), 2)
     
-    # Right panel - Total session counters
     panel_width = 350
-    panel_height = 280
+    panel_height = 290
     panel_x = width - panel_width - 20
     panel_y = 20
     
     cv2.rectangle(frame, (panel_x, panel_y), (width - 20, panel_y + panel_height), (40, 25, 25), -1)
     cv2.rectangle(frame, (panel_x, panel_y), (width - 20, panel_y + panel_height), (0, 200, 255), 2)
     
-    # Title
     cv2.putText(frame, "SESSION TOTALS",
                (panel_x + 20, panel_y + 40), cv2.FONT_HERSHEY_DUPLEX, 0.8, (0, 255, 255), 2)
     
-    # Draw each exercise total
     y_offset = panel_y + 90
     for i, exercise in enumerate(form_analyzer.exercises):
         count = form_analyzer.session_reps[exercise]
         
-        # Highlight current exercise
         if i == form_analyzer.current_exercise:
             color = (0, 255, 0)
             cv2.putText(frame, ">", (panel_x + 20, y_offset), cv2.FONT_HERSHEY_SIMPLEX, 0.9, color, 2)
@@ -985,7 +962,6 @@ def draw_ui(frame, form_analyzer, audio, width, height):
         
         y_offset += 50
     
-    # Total reps
     total_reps = sum(form_analyzer.session_reps.values())
     cv2.line(frame, (panel_x + 20, y_offset), (width - 40, y_offset), (0, 200, 255), 2)
     y_offset += 40
@@ -994,49 +970,46 @@ def draw_ui(frame, form_analyzer, audio, width, height):
     cv2.putText(frame, f"{total_reps}", 
                (panel_x + 250, y_offset), cv2.FONT_HERSHEY_DUPLEX, 1.5, (255, 255, 0), 3)
     
-    # Requirements box - bottom right
     req_panel_width = 400
-    req_panel_height = 220
+    req_panel_height = 230
     req_panel_x = width - req_panel_width - 20
     req_panel_y = height - req_panel_height - 20
     
     cv2.rectangle(frame, (req_panel_x, req_panel_y), (width - 20, height - 20), (25, 40, 25), -1)
     cv2.rectangle(frame, (req_panel_x, req_panel_y), (width - 20, height - 20), (0, 255, 100), 2)
     
-    # Get current exercise requirements
     current_exercise = form_analyzer.exercises[form_analyzer.current_exercise]
     
-    # Title
     cv2.putText(frame, f"{current_exercise} REQUIREMENTS",
                (req_panel_x + 20, req_panel_y + 35), cv2.FONT_HERSHEY_DUPLEX, 0.7, (0, 255, 100), 2)
     
-    # Requirements based on exercise
     req_y = req_panel_y + 70
     line_height = 30
     
     if current_exercise == "PUSH-UP":
         requirements = [
-            "• Down: Elbow < 90°",
-            "• Up: Elbow > 160°",
-            "• Body: 160-180° (straight)",
-            "• No sagging or piking",
-            "• Stand SIDEWAYS to camera"
+            "1) Down: Elbow < 90 deg",
+            "2) Up: Elbow > 160 deg",
+            "3) Body: 160-180 deg (straight)",
+            "4) No sagging or piking",
+            "5) Stand SIDEWAYS to camera"
         ]
     elif current_exercise == "PULL-UP":
         requirements = [
-            "• Top: Elbow < 80°",
-            "• Bottom: Elbow > 150°",
-            "• Body: > 160° (no kipping)",
-            "• Keep legs still",
-            "• Chin over bar at top"
+            "1) Top: Elbow < 80 deg",
+            "2) Bottom: Elbow > 150 deg",
+            "3) Body: > 160 deg (no kipping)",
+            "4) Keep legs still",
+            "5) Chin over bar at top",
+            "6) Pull evenly with both arms"
         ]
     else:  # SQUAT
         requirements = [
-            "• Up: Knee > 150° (standing)",
-            "• Down: Knee < 110° (parallel+)",
-            "• Chest up (back 60-120°)",
-            "• Knees track over toes",
-            "• Face camera directly"
+            "1) Up: Knee > 150 deg (standing)",
+            "2) Down: Knee < 110 deg (parallel)",
+            "3) Chest up (back 60-120 deg)",
+            "4) Knees: hip-width OK (ratio < 1.6)",
+            "5) Face camera directly"
         ]
     
     for req in requirements:
@@ -1079,11 +1052,10 @@ def main():
     cv2.resizeWindow(window_name, width, height)
     
     print("\n" + "=" * 60)
-    print("NEW FEATURES:")
-    print("  • Reps only count with GOOD FORM")
-    print("  • Bad form = rep NOT counted")
-    print("  • R = Reset current exercise counter")
-    print("  • T = Reset ALL session counters")
+    print("SQUAT FIX APPLIED:")
+    print("  • Knee width threshold raised: 1.2 → 1.6")
+    print("  • Live knee width ratio shown on screen + terminal")
+    print("  • Shows ratio/threshold so you can tune further")
     print("\nCONTROLS:")
     print("  S = Start/Stop session")
     print("  M = Mute/Unmute audio")
@@ -1120,6 +1092,9 @@ def main():
             audio_feedback = ""
             
             if results.pose_landmarks:
+                # Person is visible - reset the lost-frame counter
+                form_analyzer.lost_frames = 0
+
                 mp_drawing.draw_landmarks(
                     frame,
                     results.pose_landmarks,
@@ -1130,11 +1105,26 @@ def main():
                 
                 current_exercise_name = form_analyzer.exercises[form_analyzer.current_exercise]
                 form_data = form_analyzer.analyze_form(results.pose_landmarks.landmark, current_exercise_name)
+            else:
+                # Person not detected - count lost frames
+                form_analyzer.lost_frames = getattr(form_analyzer, 'lost_frames', 0) + 1
+                # After 10 lost frames (~0.3s) reset squat state so it restarts cleanly
+                if form_analyzer.lost_frames == 10:
+                    form_analyzer.stage = "WAITING"
+                    form_analyzer.elbow_buffer.clear()
+                    form_analyzer.hip_buffer.clear()
+                    form_analyzer.shoulder_buffer.clear()
+                    form_analyzer.stage_timer = 0
+                    form_analyzer._rep_form_issue = ""
+                    print("  [RESET] Lost tracking - stage reset to WAITING")
+                feedback = "Step back into frame..."
+            
+            # Safely extract feedback from form_data if available
+            if form_data:
                 feedback = form_data["feedback"]
                 audio_feedback = form_data.get("audio_feedback", "")
-                
-                if audio_feedback and form_analyzer.session_active and audio.enabled and not audio.muted:
-                    # IMMEDIATE feedback for bad form - force it to speak right away
+
+            if audio_feedback and form_analyzer.session_active and audio.enabled and not audio.muted:
                     if "not counted" in audio_feedback.lower():
                         audio.speak(audio_feedback, force=True)
                     elif "Good" in audio_feedback or "Excellent" in audio_feedback:
