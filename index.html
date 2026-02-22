@@ -461,6 +461,32 @@
             margin-left: 10px;
             text-transform: uppercase;
             font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.8;
+                background: #0366d6;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        
+        /* Video Update Banner */
+        .update-banner {
+            background: linear-gradient(135deg, #2cbe4e 0%, #1e7e34 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(44, 190, 78, 0.3);
         }
         
         /* Responsive Design */
@@ -560,6 +586,11 @@
             </div>
         </section>
 
+        <!-- Update Banner -->
+        <div class="update-banner">
+            🎉 NEW: Pull-up demo video added! Watch real-time kipping detection, asymmetry check, and full range of motion validation
+        </div>
+
         <!-- Demo Videos Section -->
         <section>
             <h2 style="font-size: 2.2em; margin: 40px 0 20px;">📹 Demo Videos</h2>
@@ -573,7 +604,6 @@
                     <h3>
                         <span class="emoji">🔵</span> 
                         Push-up Analysis
-                        <span class="new-video-badge">Updated</span>
                     </h3>
                     <div class="video-container">
                         <iframe width="815" height="458" src="https://www.youtube.com/embed/Sq3WyI0eTN4" 
@@ -589,31 +619,32 @@
                     </p>
                 </div>
                 
-                <!-- Pull-up Video -->
+                <!-- Pull-up Video - NEW VIDEO ADDED -->
                 <div class="video-card">
                     <h3>
                         <span class="emoji">🔴</span> 
                         Pull-up Analysis
+                        <span class="new-video-badge">NEW</span>
                     </h3>
                     <div class="video-container">
-                        <iframe width="815" height="458" src="https://www.youtube.com/embed/VIDEO_ID_2" 
-                                title="Pull-up Analysis Demo"
+                        <iframe width="815" height="458" src="https://www.youtube.com/embed/WB4bbG-Ci7E" 
+                                title="Pull-up Analysis Demo - Exercise Form Detector" 
                                 frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                referrerpolicy="strict-origin-when-cross-origin" 
                                 allowfullscreen>
                         </iframe>
                     </div>
                     <p>
-                        <strong>Features:</strong> Kipping detection • Asymmetry check • Full ROM requirement • Chin over bar
+                        <strong>Features:</strong> Kipping detection • Asymmetry check (30° tolerance) • Full ROM requirement (150° at bottom, 80° at top) • Chin over bar validation • Real-time angle display
                     </p>
                 </div>
                 
-                <!-- Squat Video - NEW VIDEO ADDED -->
+                <!-- Squat Video -->
                 <div class="video-card">
                     <h3>
                         <span class="emoji">🟢</span> 
                         Squat Analysis
-                        <span class="new-video-badge">NEW</span>
                     </h3>
                     <div class="video-container">
                         <iframe width="815" height="458" src="https://www.youtube.com/embed/qqR_Lphhp3w" 
@@ -631,11 +662,16 @@
             </div>
             
             <div style="background: #f1f8ff; padding: 15px; border-radius: 8px; margin-top: 20px; text-align: center; border-left: 4px solid #0366d6;">
-                <p style="color: #0366d6; font-weight: 500;">
-                    📌 Squat Demo Video Added: <a href="https://youtu.be/qqR_Lphhp3w" target="_blank" style="color: #0366d6;">https://youtu.be/qqR_Lphhp3w</a>
+                <p style="color: #0366d6; font-weight: 500; margin-bottom: 10px;">
+                    📌 All Demo Videos:
                 </p>
-                <p style="color: #586069; font-size: 0.95em; margin-top: 5px;">
-                    Shows real-time knee angle tracking, depth validation, and form correction for proper squat technique
+                <p style="color: #586069; font-size: 0.95em;">
+                    <strong>Push-up:</strong> <a href="https://youtu.be/Sq3WyI0eTN4" target="_blank" style="color: #0366d6;">Sq3WyI0eTN4</a> • 
+                    <strong>Pull-up:</strong> <a href="https://youtu.be/WB4bbG-Ci7E" target="_blank" style="color: #0366d6; font-weight: bold;">WB4bbG-Ci7E</a> • 
+                    <strong>Squat:</strong> <a href="https://youtu.be/qqR_Lphhp3w" target="_blank" style="color: #0366d6;">qqR_Lphhp3w</a>
+                </p>
+                <p style="color: #2cbe4e; font-size: 0.95em; margin-top: 10px;">
+                    ✅ Pull-up demo now available with complete form analysis
                 </p>
             </div>
         </section>
@@ -667,7 +703,7 @@
                         <li>Bottom position: Elbow &gt; 150 deg</li>
                         <li>Body angle: &gt; 160 deg (no kipping)</li>
                         <li>Keep legs still</li>
-                        <li>Pull evenly with both arms</li>
+                        <li>Pull evenly with both arms (asymmetry &lt; 30°)</li>
                         <li>Full range of motion required</li>
                     </ul>
                 </div>
@@ -714,7 +750,7 @@
                     <h3 style="color: #0366d6; margin-bottom: 15px;">Smart Features</h3>
                     <ul style="list-style: none;">
                         <li style="margin-bottom: 8px;">• Form violation tracking per rep</li>
-                        <li style="margin-bottom: 8px;">• Asymmetry detection</li>
+                        <li style="margin-bottom: 8px;">• Asymmetry detection (pull-ups)</li>
                         <li style="margin-bottom: 8px;">• Audio cooldown system</li>
                         <li style="margin-bottom: 8px;">• Session persistence</li>
                         <li style="margin-bottom: 8px;">• Multi-exercise support</li>
@@ -883,6 +919,7 @@
                     <li>Technical thresholds are heuristic ranges informed by literature and coaching guidelines.</li>
                     <li>EMG findings are exercise-variation dependent - references justify rule directionality.</li>
                     <li>Squat knee valgus detection based on Escamilla (2001) and Schoenfeld (2010).</li>
+                    <li>Pull-up asymmetry threshold (30°) based on bilateral EMG studies (Youdas et al., 2010).</li>
                 </ul>
             </div>
         </section>
@@ -908,8 +945,8 @@
                     <div class="stat-label">Rep Cooldown</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">Python</div>
+                    <div class="stat-number">30°</div>
+                    <div class="stat-label">Asymmetry Tolerance</div>
                 </div>
             </div>
         </section>
@@ -942,7 +979,7 @@
                 🔒 Videos are unlisted - only accessible via this repository
             </p>
             <p style="margin-top: 5px; color: #2cbe4e; font-size: 0.9em; font-weight: 500;">
-                ✅ Squat demo video added: "qqR_Lphhp3w"
+                ✅ All demo videos added: Push-up • Pull-up • Squat
             </p>
         </section>
     </main>
@@ -969,7 +1006,7 @@
                     MediaPipe • OpenCV • Python • Biomechanics Research
                 </p>
                 <p style="margin-top: 5px; color: #2cbe4e; font-size: 0.85em;">
-                    Squat Demo: qqR_Lphhp3w
+                    Demo Videos: Sq3WyI0eTN4 • WB4bbG-Ci7E • qqR_Lphhp3w
                 </p>
             </div>
         </div>
