@@ -10,10 +10,10 @@ To what extent can a computer vision–based system using pose estimation and mu
  
 ## 3. System Overview
 The system is implemented in Python using:
-• OpenCV for video capture and real-time rendering.
-• MediaPipe Pose for 2D human pose estimation.
-• Text-to-Speech (TTS) for real-time audio feedback.
-• Multithreading to ensure non-blocking audio output.
+- OpenCV for video capture and real-time rendering.
+- MediaPipe Pose for 2D human pose estimation.
+- Text-to-Speech (TTS) for real-time audio feedback.
+- Multithreading to ensure non-blocking audio output.
 A webcam captures live video, from which MediaPipe extracts body landmarks. Joint angles and body alignment metrics are calculated and evaluated against predefined biomechanical thresholds. Based on this analysis, the system provides immediate feedback and additionally counts repetitions.
  
 ## 4. Pose Estimation and Angle Calculation
@@ -75,32 +75,32 @@ This allows users to understand form requirements before and during exercise.
 ### 6.2 Audio Feedback
 To reduce reliance on constant screen monitoring, the system integrates real-time audio feedback using text-to-speech synthesis.
 Key features include:
-• Non-blocking audio processing via a dedicated thread.
-• Feedback prioritization (errors > successful reps).
-• Cooldown timers to avoid repetitive or distracting cues.
-• Immediate warnings for uncounted repetitions.
+- Non-blocking audio processing via a dedicated thread.
+- Feedback prioritization (errors > successful reps).
+- Cooldown timers to avoid repetitive or distracting cues.
+- Immediate warnings for uncounted repetitions.
 Audio feedback enables users to maintain focus on movement execution rather than visual checking, particularly during physically demanding sets.
  
 ## 7. Evaluation and Metrics
 The system is evaluated using both quantitative and qualitative criteria:
-• Pose detection stability: consistency of landmark tracking across frames.
-• Form classification accuracy: correct identification of valid vs invalid repetitions.
-• Latency: time between error detection and feedback delivery.
-• User response: observable improvement in form after feedback.
-• Usability: reduced need for visual attention during exercise.
+- Pose detection stability: consistency of landmark tracking across frames.
+- Form classification accuracy: correct identification of valid vs invalid repetitions.
+- Latency: time between error detection and feedback delivery.
+- User response: observable improvement in form after feedback.
+- Usability: reduced need for visual attention during exercise.
 Comparisons are made between visual-only feedback and combined visual–audio feedback to assess effectiveness.
  
 ## 8. Injury Risk Reduction
 While direct injury prevention cannot be conclusively measured without long-term clinical studies, the system targets known biomechanical risk factors, including:
-• Poor joint alignment
-• Excessive spinal deviation
-• Momentum-based movement patterns
+- Poor joint alignment
+- Excessive spinal deviation
+- Momentum-based movement patterns
 By rejecting repetitions with unsafe form and providing immediate corrective feedback, the system likely contributes to a reduction in injury risk, particularly for beginners and unsupervised training environments.
  
 ## 9. Limitations
-• The system relies on 2D pose estimation, which may be less accurate for depth-related movements.
-• Lighting and camera angle significantly affect landmark accuracy.
-• Individual anatomical differences are not fully personalized.
+- The system relies on 2D pose estimation, which may be less accurate for depth-related movements.
+- Lighting and camera angle significantly affect landmark accuracy.
+- Individual anatomical differences are not fully personalized.
  
 ## 10. Conclusion
 This project demonstrates that a computer vision–based system using pose estimation and multimodal feedback can effectively detect incorrect exercise form and improve movement quality in real time. The integration of audio feedback reduces reliance on visual attention and enhances usability during exercise.
