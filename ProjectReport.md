@@ -18,60 +18,58 @@ A webcam captures live video, from which MediaPipe extracts body landmarks. Join
  
 ## 4. Pose Estimation and Angle Calculation
 MediaPipe Pose provides normalized landmark coordinates for major joints. Joint angles are calculated using vector geometry:
-• Elbow angle (shoulder–elbow–wrist).
-• Hip angle (shoulder–hip–knee).
-• Knee angle (hip–knee–ankle).
-• Torso angle relative to vertical (for squats)..
+- Elbow angle (shoulder–elbow–wrist).
+- Hip angle (shoulder–hip–knee).
+- Knee angle (hip–knee–ankle).
+- Torso angle relative to vertical (for squats)..
 To reduce noise and false positives, temporal smoothing is applied using a median filter over multiple frames. This ensures stable angle values even with minor landmark jitter.
  
 ## 5. Exercise-Specific Form Analysis
 ### 5.1 Push-Up Form Analysis
 For push-ups, the system analyzes:
-• Elbow flexion angle to detect sufficient depth and lockout.
-• Hip angle to assess body alignment (plank position).
-• Knee angle to ensure the user is on their toes.
+- Elbow flexion angle to detect sufficient depth and lockout.
+- Hip angle to assess body alignment (plank position).
+- Knee angle to ensure the user is on their toes.
 Detected form errors include:
-• Sagging hips (lumbar extension).
-• Excessive hip elevation (piking).
-• Performing push-ups on the knees.
-• Insufficient elbow flexion depth.
+- Sagging hips (lumbar extension).
+- Excessive hip elevation (piking).
+- Performing push-ups on the knees.
+- Insufficient elbow flexion depth.
 A repetition is only counted if:
-• Elbow angle passes both the down and up thresholds.
-• Body alignment remains within acceptable limits.
-• No form violations persist during the repetition.
+- Elbow angle passes both the down and up thresholds.
+- Body alignment remains within acceptable limits.
+- No form violations persist during the repetition.
 If incorrect form persists across multiple frames, an audio warning is triggered. Repetitions with poor form are explicitly not counted, reinforcing correct technique.
  
 ### 5.2 Pull-Up Form Analysis
 For pull-ups, the system evaluates:
-• Elbow angle to detect top and bottom positions.
-• Hip angle to detect excessive swinging (kipping).
-• Shoulder–elbow relationship to ensure controlled movement.
+- Elbow angle to detect top and bottom positions.
+- Hip angle to detect excessive swinging (kipping).
+- Shoulder–elbow relationship to ensure controlled movement.
 Detected errors include:
-• Kipping (hip swing).
-• Incomplete range of motion.
-• Uncontrolled descent.
+- Kipping (hip swing).
+- Incomplete range of motion.
+- Inequal ascent.
 Only repetitions performed with controlled motion and minimal hip movement are counted. Audio feedback is provided to discourage momentum-based repetitions.
  
 ### 5.3 Squat Form Analysis
 For squats, the system analyzes:
-• Knee flexion angle to determine squat depth.
-• Hip angle for movement consistency.
-• Torso angle relative to vertical to assess spinal posture.
-• Knee alignment relative to hip width to detect valgus collapse.
+- Knee flexion angle to determine squat depth.
+- Knee alignment relative to hip width to detect valgus collapse or excessive flaring.
 Detected errors include:
-• Insufficient squat depth.
-• Excessive forward or upright torso lean.
-• Knee valgus (knees collapsing inward).
+- Insufficient squat depth (not reaching parallel).
+- Knee valgus (knees collapsing inward).
+- Excessive knee flaring (knees too wide).
 The system allows natural variation but rejects repetitions with biomechanically risky patterns. Audio cues are issued when errors persist, especially at the bottom of the squat where injury risk is highest.
  
 ## 6. Multimodal Feedback System
 ### 6.1 Visual Feedback
 Visual feedback includes:
-• Real-time skeleton overlay
-• On-screen textual cues
-• Live repetition counters
-• Exercise-specific form requirements
-• Session totals and status indicators
+- Real-time skeleton overlay
+- On-screen textual cues
+- Live repetition counters
+- Exercise-specific form requirements
+- Session totals and status indicators
 This allows users to understand form requirements before and during exercise.
  
 ### 6.2 Audio Feedback
