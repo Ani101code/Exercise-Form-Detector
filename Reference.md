@@ -137,10 +137,8 @@ This bibliography is split into two groups:
     **[SQ-5 — knee flare / width-to-hip ratio]**  
     https://pubmed.ncbi.nlm.nih.gov/19130646/
 
-32. Swinton, P.A. et al. (2012). *A biomechanical analysis of straight and hexagonal barbell deadlifts using submaximal loads.* Journal of Strength and Conditioning Research. Via squat knee-width discussion.  
-    **[SQ-5 — knee flare / width-to-hip ratio]**  
-    https://www.acefitness.org/resources/everyone/blog/5428/what-happens-when-your-knees-cave-in-during-a-squat/
-
+32. Barbell Physio. Addressing Knee Valgus in Squats.
+https://thebarbellphysio.com/addressing-knee-valgus-in-squats/
 ---
 
 # Notes for Use in This Project
