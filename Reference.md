@@ -6,118 +6,144 @@ This bibliography is split into two groups:
 
 ---
 
-# A) Technical references (computer vision / pose estimation / implementation)
+# A) Technical References (Computer Vision / Pose Estimation / Implementation)
 
-- 1. Lugaresi, C., Tang, J., Nash, H., et al. (2019). *MediaPipe: A Framework for Building Perception Pipelines.* arXiv:1906.08172.  
-  - Link: https://arxiv.org/abs/1906.08172
+1. Lugaresi, C., Tang, J., Nash, H., et al. (2019). *MediaPipe: A Framework for Building Perception Pipelines.* arXiv:1906.08172.  
+   https://arxiv.org/abs/1906.08172
 
-- 2. Bazarevsky, V., Grishchenko, I., Raveendran, K., et al. (2020). *BlazePose: On-device Real-time Body Pose Tracking* (Google AI technical release ecosystem).  
-  - Link: https://ai.googleblog.com/2020/08/on-device-real-time-body-pose-tracking.html
+2. Bazarevsky, V., Grishchenko, I., Raveendran, K., et al. (2020). *BlazePose: On-device Real-time Body Pose Tracking* (Google AI technical release ecosystem).  
+   https://ai.googleblog.com/2020/08/on-device-real-time-body-pose-tracking.html
 
-- 3. Cao, Z., Hidalgo, G., Simon, T., Wei, S.-E., & Sheikh, Y. (2021). *OpenPose: Realtime Multi-Person 2D Pose Estimation using Part Affinity Fields.* IEEE TPAMI, 43(1), 172-186.  
-  - Link: https://doi.org/10.1109/TPAMI.2019.2929257
+3. Cao, Z., Hidalgo, G., Simon, T., Wei, S.-E., & Sheikh, Y. (2021). *OpenPose: Realtime Multi-Person 2D Pose Estimation using Part Affinity Fields.* IEEE TPAMI, 43(1), 172–186.  
+   https://doi.org/10.1109/TPAMI.2019.2929257
 
-- 4. Toshev, A., & Szegedy, C. (2014). *DeepPose: Human Pose Estimation via Deep Neural Networks.* CVPR.  
-  - Link: https://doi.org/10.1109/CVPR.2014.214
+4. Toshev, A., & Szegedy, C. (2014). *DeepPose: Human Pose Estimation via Deep Neural Networks.* CVPR.  
+   https://doi.org/10.1109/CVPR.2014.214
 
-- 5. Newell, A., Yang, K., & Deng, J. (2016). *Stacked Hourglass Networks for Human Pose Estimation.* ECCV.  
-  - Link: https://doi.org/10.1007/978-3-319-46484-8_29
+5. Newell, A., Yang, K., & Deng, J. (2016). *Stacked Hourglass Networks for Human Pose Estimation.* ECCV.  
+   https://doi.org/10.1007/978-3-319-46484-8_29
 
-- 6. OpenCV documentation.  
-  - Link: https://docs.opencv.org/
+6. OpenCV documentation.  
+   https://docs.opencv.org/
 
-- 7. MediaPipe Pose / Pose Landmarker documentation.  
-  - Link: https://developers.google.com/mediapipe/solutions/vision/pose_landmarker
+7. MediaPipe Pose / Pose Landmarker documentation.  
+   https://developers.google.com/mediapipe/solutions/vision/pose_landmarker
 
-- 8. NumPy documentation.  
-  - Link: https://numpy.org/doc/
+8. NumPy documentation.  
+   https://numpy.org/doc/
 
-- 9. Python threading and queue documentation.  
-  - Links:  
-    - https://docs.python.org/3/library/threading.html  
-    - https://docs.python.org/3/library/queue.html  
+9. Python threading documentation.  
+   https://docs.python.org/3/library/threading.html
 
-- 10. pyttsx3 documentation.  
-  - Link: https://pyttsx3.readthedocs.io/
+10. Python queue documentation.  
+    https://docs.python.org/3/library/queue.html
 
-- 11. Microsoft documentation (SAPI/COM context for win32com).  
-  - Links:  
-    - https://learn.microsoft.com/  
-    - https://learn.microsoft.com/en-us/previous-versions/windows/desktop/ms723602(v=vs.85)
+11. pyttsx3 documentation.  
+    https://pyttsx3.readthedocs.io/
 
----
-
-# B) Anatomical, biomechanics, and EMG references (exercise form logic)
-
-## B1) Foundational biomechanics / kinesiology books
-
-- 12. Neumann, D. A. (2017). *Kinesiology of the Musculoskeletal System: Foundations for Rehabilitation* (3rd ed.). Elsevier.  
-  - Link: https://www.elsevier.com/books/kinesiology-of-the-musculoskeletal-system/neumann/978-0-323-28320-1
-
-- 13. NSCA (Haff, G. G., & Triplett, N. T., eds.). (2016). *Essentials of Strength Training and Conditioning* (4th ed.). Human Kinetics.  
-  - Link: https://us.humankinetics.com/products/essentials-of-strength-training-and-conditioning-4th-edition-with-web-resource
-
-- 14. American College of Sports Medicine. (2021). *ACSM's Guidelines for Exercise Testing and Prescription* (11th ed.). Wolters Kluwer.  
-  - Link: https://shop.lww.com/ACSM-s-Guidelines-for-Exercise-Testing-and-Prescription/p/9781975150181
-
-- 15. Kendall, F. P., McCreary, E. K., Provance, P. G., Rodgers, M. M., & Romani, W. A. (2005). *Muscles: Testing and Function with Posture and Pain* (5th ed.). Lippincott Williams & Wilkins.  
-  - Link: https://shop.lww.com/Kendall-s-Muscles--Testing-and-Function-with-Posture-and-Pain/p/9780781747806
+12. Microsoft SAPI/COM documentation (win32com context).  
+    https://learn.microsoft.com/en-us/previous-versions/windows/desktop/ms723602(v=vs.85)
 
 ---
 
-## B2) Squat technique, joint loading, and muscle activation
+# B) Anatomical, Biomechanics, and EMG References (Exercise Form Logic)
 
-- 16. Escamilla, R. F. (2001). *Knee biomechanics of the dynamic squat exercise.* Medicine & Science in Sports & Exercise, 33(1), 127-141.  
-  - Link: https://pubmed.ncbi.nlm.nih.gov/11224815/
+## B1) Foundational Biomechanics / Kinesiology
 
-- 17. Schoenfeld, B. J. (2010). *Squatting kinematics and kinetics and their application to exercise performance.* Journal of Strength and Conditioning Research, 24(12), 3497-3506.  
-  - Link: https://doi.org/10.1519/JSC.0b013e3181bac2d7
-
-- 18. Caterisano, A., Moss, R. F., Pellinger, T. K., et al. (2002). *The effect of back squat depth on the EMG activity of 4 superficial hip and thigh muscles.* Journal of Strength and Conditioning Research, 16(3), 428-432.  
-  - Link: https://journals.lww.com/nsca-jscr/Abstract/2002/08000/The_Effect_of_Back_Squat_Depth_on_the_EMG_Activity.14.aspx
-
-- 19. Bryanton, M. A., Kennedy, M. D., Carey, J. P., & Chiu, L. Z. F. (2012). *Effect of squat depth and barbell load on relative muscular effort in squatting.* Journal of Strength and Conditioning Research, 26(10), 2820-2828.  
-  - Link: https://doi.org/10.1519/JSC.0b013e31826791a7
+13. American College of Sports Medicine. (2021). *ACSM's Guidelines for Exercise Testing and Prescription* (12th ed.). Wolters Kluwer.  
+    https://shop.lww.com/ACSM-s-Guidelines-for-Exercise-Testing-and-Prescription/p/9781975150181
 
 ---
 
-## B3) Push-up biomechanics and EMG
+## B2) Push-Up
 
-- 20. Cogley, R. M., Archambault, T. A., Fibeger, J. F., et al. (2005). *Comparison of muscle activation using various hand positions during the push-up exercise.* Journal of Strength and Conditioning Research, 19(3), 628-633.  
-  - Link: https://journals.lww.com/nsca-jscr/Abstract/2005/08000/Comparison_of_Muscle_Activation_using_Various_Hand.25.aspx
+14. Ay, A. et al. (2015). *The effects of exercise type and elbow angle on vertical ground reaction force and muscle activity during a push-up plus exercise.* PMC / PLOS ONE.  
+    **[PU-1 — 90° elbow depth criterion]**  
+    https://pmc.ncbi.nlm.nih.gov/articles/PMC4327800/
 
-- 21. Youdas, J. W., Amundson, C. L., Cicero, K. S., et al. (2010). *Surface electromyographic activation patterns and elbow joint motion during a push-up, knee push-up, and bench press.* Journal of Strength and Conditioning Research, 24(1), 16-22.  
-  - Link: https://journals.lww.com/nsca-jscr/Abstract/2010/01000/Surface_Electromyographic_Activation_Patterns_and.3.aspx
+15. Donatto, F. et al. *Biomechanical Analysis of the Elbow Joint Loading During Push-Up.* ResearchGate.  
+    **[PU-2 — elbow extension at top, ~160–180°]**  
+    https://www.researchgate.net/publication/247915095_BIOMECHANICAL_ANALYSIS_OF_THE_ELBOW_JOINT_LOADING_DURING_PUSH-UP
 
-- 22. Snarr, R. L., & Esco, M. R. (2013). *Electromyographical comparison of the traditional and suspension push-up.* Journal of Human Kinetics, 39, 75-83.  
-  - Link: https://doi.org/10.2478/hukin-2013-0077
+16. Winter, D.A. (1993). *Hand position affects elbow joint load during push-up exercise.* Journal of Orthopaedic & Sports Physical Therapy. PubMed.  
+    **[PU-2 — elbow extension at top]**  
+    https://pubmed.ncbi.nlm.nih.gov/8514808/
 
----
+17. Seedman, J. (2015). *Tip: The Worst Way to Do Push-Ups.* Advanced Human Performance.  
+    **[PU-3 — body alignment / hip angle, plank position 160–180°]**  
+    https://www.advancedhumanperformance.com/tip-the-worst-way-to-do-pushups
 
-## B4) Pull-up / chin-up biomechanics and EMG
-
-- 23. Youdas, J. W., Amundson, C. L., Cicero, K. S., et al. (2010). *Surface electromyographic activation patterns and elbow joint motion during a pull-up, chin-up, or perfect-pullup rotational exercise.* Journal of Strength and Conditioning Research, 24(12), 3404-3414.  
-  - Link: https://doi.org/10.1519/JSC.0b013e3181bdec05
-
-- 24. Dickie, J. A., Faulkner, J. A., Barnes, M. J., & Lark, S. D. (2017). *Electromyographic analysis of muscle activation in pull-up variations.* Journal of Electromyography and Kinesiology, 32, 30-36.  
-  - Link: https://doi.org/10.1016/j.jelekin.2016.12.004
-
----
-
-## B5) Practical anatomy / exercise reference websites (for implementation notes)
-
-- 25. ExRx Exercise Library (exercise mechanics and prime movers).  
-  - Link: https://exrx.net/
-
-- 26. ACE (American Council on Exercise) exercise technique resources.  
-  - Link: https://www.acefitness.org/
-
-- 27. NCBI Bookshelf anatomy and kinesiology resources.  
-  - Link: https://www.ncbi.nlm.nih.gov/books/
+18. Calatayud, J. et al. (2012). *The Biomechanics of the Push-up.* ResearchGate.  
+    **[PU-3 — body alignment / hip angle]**  
+    https://www.researchgate.net/publication/271794661_The_Biomechanics_of_the_Push-up
 
 ---
 
-# Notes for use in this project
+## B3) Pull-Up / Chin-Up
+
+19. Seedman, J. (2020). *Pullups & Pulldowns: The Right & Wrong Way.* Advanced Human Performance.  
+    **[PL-1 — ~90° elbow at top position]**  
+    https://www.advancedhumanperformance.com/blog/pullups-best-technique
+
+20. Youdas, J.W. et al. (2010). *Surface electromyographic activation patterns and elbow joint motion during a pull-up, chin-up, or Perfect-Pullup rotational exercise.* Journal of Strength and Conditioning Research. PubMed.  
+    **[PL-2 — full-extension dead hang >150°]**  
+    https://pubmed.ncbi.nlm.nih.gov/21068680/
+
+21. ExRx.net. *Muscular Analysis of Pull-ups and Chin-ups.*  
+    **[PL-2 — full-extension dead hang >150°]**  
+    https://exrx.net/Questions/PullupAnalysis
+
+22. Gymshark (2026). *Pull-Ups: How to Do Them and Get Your First Rep.*  
+    **[PL-3 — chin over bar criterion]**  
+    https://www.gymshark.com/blog/article/how-to-do-pull-ups
+
+23. Elio's Health (2023). *Biomechanics of the Pull-Up.*  
+    **[PL-3 — chin over bar criterion]**  
+    https://www.elioshealth.com/blog/pull-up
+
+24. Urbanczyk, C.A. et al. (2020). *Avoiding high-risk rotator cuff loading: Muscle force during three pull-up techniques.* Scandinavian Journal of Medicine & Science in Sports. Via Hooper's Beta.  
+    **[PL-4 — kipping & asymmetry as form violations]**  
+    https://www.hoopersbeta.com/library/how-pullups-work-wide-grip-standard-chin-up-biomechanics
+
+25. Dickie, J.A. et al. (2017). *Electromyographic analysis of muscle activation during pull-up variations.* Journal of Electromyography and Kinesiology. ScienceDirect.  
+    **[PL-4 — kipping & asymmetry as form violations]**  
+    https://www.sciencedirect.com/science/article/am/pii/S0765159722001320
+
+---
+
+## B4) Squat
+
+26. Muscle Evo (2023). *Parallel Squats vs Deep vs 90 Degrees: How Low to Go?* (citing Escamilla RF et al. review of 70 squat studies).  
+    **[SQ-1 — parallel depth = ~125° of knee flexion]**  
+    https://muscleevo.net/how-deep-should-you-squat/
+
+27. Escamilla, R.F. (2001). *Knee biomechanics of the dynamic squat exercise.* Medicine & Science in Sports & Exercise. Via IJSPT review.  
+    **[SQ-1 — parallel depth = ~125° of knee flexion]**  
+    https://ijspt.scholasticahq.com/article/94600-a-biomechanical-review-of-the-squat-exercise-implications-for-clinical-practice
+
+28. Straub, R.K. & Powers, C.M. (2024). *A Biomechanical Review of the Squat Exercise: Implications for Clinical Practice.* International Journal of Sports Physical Therapy. PMC.  
+    **[SQ-2 — squat depth definitions; SQ-4 — knee valgus]**  
+    https://pmc.ncbi.nlm.nih.gov/articles/PMC10987311/
+
+29. Bloomquist, K. et al. (2016). *Muscle Activation Differs between Three Different Knee Joint-Angle Positions during a Maximal Isometric Back Squat.* PMC.  
+    **[SQ-3 — muscle activation at 90° vs standing 140°+]**  
+    https://pmc.ncbi.nlm.nih.gov/articles/PMC4967668/
+
+30. McClure, C. (2020). *The Effects of Squatting Mechanics on the Soft Tissues of the Knee Joint.* UNC DPT Portfolios.  
+    **[SQ-4 — knee valgus as form violation]**  
+    https://dptportfolios.web.unc.edu/wp-content/uploads/sites/2565/2020/05/McClureC_AdvOrtho.pdf
+
+31. Myer, G.D. et al. (2008). *The effects of plyometric vs. dynamic stabilization and balance training on power, balance, and landing force in female athletes.* Journal of Strength and Conditioning Research. PubMed.  
+    **[SQ-5 — knee flare / width-to-hip ratio]**  
+    https://pubmed.ncbi.nlm.nih.gov/19130646/
+
+32. Swinton, P.A. et al. (2012). *A biomechanical analysis of straight and hexagonal barbell deadlifts using submaximal loads.* Journal of Strength and Conditioning Research. Via squat knee-width discussion.  
+    **[SQ-5 — knee flare / width-to-hip ratio]**  
+    https://www.acefitness.org/resources/everyone/blog/5428/what-happens-when-your-knees-cave-in-during-a-squat/
+
+---
+
+# Notes for Use in This Project
 
 - Technical thresholds (e.g., elbow/knee/hip angle cutoffs) should be treated as heuristic ranges informed by literature and coaching guidelines, then calibrated empirically for camera setup and user population.
 
